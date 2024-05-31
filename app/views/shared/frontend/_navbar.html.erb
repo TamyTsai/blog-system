@@ -52,12 +52,21 @@
       <div class="navbar-end">
         <div class="navbar-item">
           <div class="buttons">
-            <a class="button is-primary">
-              <strong>註冊</strong>
-            </a>
-            <a class="button is-light">
-              登入
-            </a>
+            <% if user_signed_in? %> <!-- devise套件中的方法 -->
+            <!-- 如果使用者有登入 -->
+            <!-- 顯示 目前使用者的email欄位內容 及 個人資料、登出按鈕 -->
+              <%= current_user.email %>，你好 <!-- devise套件中的方法 -->
+              <!-- current_user是一個model物件，有email欄位 -->
+              <%= link_to '個人資料', edit_user_registration_path, class: 'button is-light' %>
+              <%= link_to '登出', destroy_user_session_path, class: 'button is-danger', method: 'delete', data: {confirm: "是否確定登出?"}  %>
+              <!-- 按下登出按鈕後，導向destroy_user_session_path路徑 -->
+            <% else %>
+            <!-- 如果使用者沒登入 -->
+            <!-- 顯示註冊和登入的按鈕 -->
+              <%= link_to '註冊', new_user_registration_path, class: 'button is-primary' %>
+              <!-- 預設使用GET方法 -->
+              <%= link_to '登入', new_user_session_path, class: 'button is-light' %>
+            <% end %>
           </div>
         </div>
       </div>
