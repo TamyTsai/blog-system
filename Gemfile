@@ -6,7 +6,7 @@ ruby '2.7.8'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'rails', '~> 6.1.4', '>= 6.1.4.6'
 # Use postgresql as the database for Active Record
-gem 'pg', '~> 1.1'
+gem 'pg', '~> 1.1' # $ rails _6.1.4.6_ new myproject -d postgresql，沒這樣建專案的話，也可來此處手動改要使用的資料庫
 # Use Puma as the app server
 gem 'puma', '~> 5.0'
 # Use SCSS for stylesheets
@@ -27,6 +27,8 @@ gem 'jbuilder', '~> 2.7'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
+# 會員系統套件，只要用 devise 就可以在幾分鐘甚至是幾十秒內就把會員註冊、登入、登出、忘記密碼等會員基本的功能完成
+gem 'devise', '~> 4.2'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
