@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Blog</title>
+    <title>部落格系統</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -11,6 +11,8 @@
   </head>
 
   <body>
+    <%= render 'shared/frontend/navbar' %>
+    <!-- 將_navbar.html.erb局部渲染進來 -->
     <%= yield %>
   </body>
 </html>
