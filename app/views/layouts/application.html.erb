@@ -13,6 +13,8 @@
   <body>
     <%= render 'shared/frontend/navbar' %>
     <!-- 將_navbar.html.erb局部渲染進來 -->
-    <%= yield %>
+    <div class="container"> <!-- bulma的container有一定的margin空間 -->
+      <%= yield %>
+    </div>
   </body>
 </html>

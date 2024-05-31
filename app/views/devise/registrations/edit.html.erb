@@ -1,0 +1,51 @@
+<h2>編輯個人資料 <%= resource_name.to_s.humanize %></h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+  <%= render "devise/shared/error_messages", resource: resource %>
+
+  <div class="field">
+    <%= f.label :email %><br />
+    <div class="control">
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "input" %>
+    </div>
+  </div>
+
+  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :password %> <i>（如果不想改變密碼，就留空）</i><br />
+    <div class="control">
+      <%= f.password_field :password, autocomplete: "new-password", class: "input" %>
+    </div>
+    <% if @minimum_password_length %>
+      <br />
+      <em>最少需要 <%= @minimum_password_length %>字元</em>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password_confirmation %><br />
+    <div class="control">
+      <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "input"  %>
+    </div>
+  </div>
+
+  <div class="field">
+    <%= f.label :current_password %> <i>（請輸入舊密碼以確認變更）</i><br />
+    <div class="control">
+      <%= f.password_field :current_password, autocomplete: "current-password", class: "input" %>
+    </div>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "更新密碼", class: 'button is-primary' %>
+  </div>
+<% end %>
+
+<h3>取消我的帳號</h3>
+
+<div>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
+
+<%= link_to "Back", :back %>
