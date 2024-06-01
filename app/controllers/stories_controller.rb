@@ -15,6 +15,11 @@ class StoriesController < ApplicationController
         # Story.order('age DESC') 依照年齡大小反向排序
         # Story.order(age: :desc) 同上
         # Story.limit(5) 只取出5筆資料
+
+        # @stories = current_user.stories.where(deleted_at: nil).order(created_at: :desc)
+        # Story.where(deleted_at: nil) 找出所有deleted欄位是nil的資料
+        # 只撈出沒有刪除時間的資料（刪除時間欄位有資料的文章 表示已經被使用者按下刪除）
+        # 但這樣做很麻煩，所以軟刪除的另一個慣用手法是default_scope（寫在story model中）
     end
 
     def new # 新增文章頁面 的 action
@@ -77,6 +82,27 @@ class StoriesController < ApplicationController
                 render :edit
                 # 去edit這個頁面，重新渲染一次（不是重新執行edit方法（action）），是請view中的edit頁面重畫一次
             end
+    end
+
+    def destroy # 對應以DELETE動詞（事實上是GET DELETE是模擬的）進入的/stories/:id路徑（story_path）（刪除已建立的文章）
+
+        @story.destroy
+        # ORM基本操作之D
+        # delete （直接刪掉）
+        # destroy （會經歷一連串callback）（真的把資料刪除，救不回來，由資料庫中抹除） 
+        # destroy_all(condition = nil)
+        # flash[:notice] = "Candidate deleted!"
+        # redirect_to '/candidates' # 回到候選人列表頁
+
+        # @story.update(deleted_at: Time.now) # 將當下的時間寫到stories資料表中的deleted_at欄位
+        # 但這樣寫不太直覺，所以這種軟刪除的慣用手法 是 去覆寫destroy方法（去Story model覆寫）
+
+        redirect_to stories_path, notice: "文章已刪除!"
+
+        # 抓資料
+        # 刪資料
+        # 跳提示
+        # 重新導向頁面
     end
 
     private # 作用範圍是 以下 直到 本class的end為止，所以要寫在最後
