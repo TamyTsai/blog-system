@@ -122,7 +122,19 @@ class StoriesController < ApplicationController
         @story = current_user.stories.find(params[:id])
         # params[:id]文章編號
         # 撈當前使用者編號為id之文章資料 給 實體變數story
-        # @story = Story.find_by(id: params[:id])
+        # Story.find(1) 找到id = 1 的資料（出問題直接噴例外：ActiveRecor::RecordNotFound）
+        # 找不到資料很常見，所以直接在ApplicationController層級做例外處理（本controller 繼承自 ApplicationController）
+
+        # @story = Story.find_by(id: params[:id]) 這樣寫會撈到 所有 使用者的 編號為id之文章
+
+
+        # ORM基本操作之R
+        # Candidate.first 找出第一筆候選人（物件、model、資料表中的一筆資料）資料
+        # Candidate.last 找到最後一筆資料
+        # Candidate.find(1) 找到id = 1 的資料（出問題直接噴例外）
+        # Candidate.find_by(id: 1) 找到id = 1 的資料（找不到時 給nil）（undefined method `name' for nil:NilClass）（nil沒有name方法）
+        # Candidate.find_by_sql("SQL語法") 
+        # Candidate.first_each do |candidate|   ....  end
     end
 
 end
