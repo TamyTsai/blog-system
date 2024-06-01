@@ -50,6 +50,7 @@ class StoriesController < ApplicationController
             # 在離開頁面時，給一個flash，flash的key為notice
             # 失敗的話可以用alert這個key
             # notice與alert為特化版的key # 舊版rails沒有這種寫法
+            # flash的view適合放在layouts（公版）
 
         else # 若 寫入失敗（格式不對、驗證沒過...）（在model做後端驗證（進資料庫前的驗證））          
             # redirect_to new_story_path
