@@ -1,0 +1,20 @@
+<!-- 新建文章new 與編輯已建立的文章edit 的 共用頁面-->
+
+<!-- form_for(MODEL) do |form|
+end -->
+<%= form_for(story) do |form| %> <!-- 還沒在controller建@story前，會出現錯誤：First argument in form cannot contain nil or be empty -->
+    <div class="field">
+        <%= form.label :title, '文章標題' %>
+        <%= form.text_field :title, class: 'input is-primary is-medium' %> 
+        <!-- form.text_field :輸入的值 送出後 對應 要寫入 的 資料庫欄位名稱 -->
+    </div>
+    <div class="field">
+        <%= form.label :content, '文章內容' %>
+        <%= form.text_area :content, rows: 10, class: 'textarea is-primary is-medium' %> 
+        <!-- <textarea>標籤 為 多行輸入框，以rows=""及cols=""控制長寬 -->
+    </div>
+    <div class="field">
+        <%= form.submit '儲存草稿', class: 'button is-medium' %>
+        <%= form.submit '發佈文章', class: 'button is-medium is-primary' %>
+    </div>
+<% end %> 

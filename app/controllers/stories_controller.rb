@@ -1,7 +1,23 @@
 class StoriesController < ApplicationController
     # 權限控管，做本controller的任何動作前，檢查是否為登入狀態，把沒有登入的人踢到登入頁面
     before_action :authenticate_user!
-    def new # 新增文章頁面
+    before_action :find_story, only: [:edit, :update, :destroy]
+
+    def index # 文章列表頁面 的 action
+        # 沒有特別聲明的話，就會去views找同名html檔案（stories資料夾下的index.html.erb）
+        @stories = current_user.stories.all.order(created_at: :desc)
+        # 透過.all類別方法，將 當前 使用者的所有文章撈出來，指定給實體變數@stories（因為撈了多筆資料，所用複數型）
+        # .order(created_at: :desc)讓撈出來的文章 按建立時間欄位值排序（新到舊）
+        # ORM基本操作之R
+        # Story.all 列出所有候選人（物件、model、資料表中的一筆資料）資料
+        # Story.select('title') 同上，只選取title欄位
+        # Story.where(title: 'Ruby') 找出所有title欄位是Ruby的資料
+        # Story.order('age DESC') 依照年齡大小反向排序
+        # Story.order(age: :desc) 同上
+        # Story.limit(5) 只取出5筆資料
+    end
+
+    def new # 新增文章頁面 的 action
         # @story = Story.new # 建立 一筆資料（model、物件） # new方法會 建立 一筆資料，但還不會存到資料庫裡  # ORM基本操作之C：new、create
         # 沒有帶東西，全新物件
         # model：class Story < ApplicationRecord
@@ -14,7 +30,7 @@ class StoriesController < ApplicationController
         # create 直接寫進資料庫
     end
 
-    def create # 將新增文章頁面的資料 傳到後端
+    def create # 將新增文章頁面的資料 傳到後端 的 action
         @story = current_user.stories.new(story_params)
         # 以Story建立物件model時，將清洗過後的資料傳進該物件
         # 資料還沒清洗過 的話，會被預設檔下來，出現ActiveModel::ForbiddenAttributesError 錯誤訊息
@@ -43,16 +59,44 @@ class StoriesController < ApplicationController
         end
     end
 
+    def edit # 編輯已建立之文章 的 action
+    end
+
+    def update # 對應以PATCH動詞（事實上是POST PATCH是模擬的）進入的/stories/:id路徑（story_path）（將進入 編輯已建立的文章頁面 後，所更新的文章資料 儲存）
+
+        if @story.update(story_params) # 成功更新資料時
+            # ORM基本操作之U
+            # update()
+            # update_attributes()
+            # update_all()
+            # 給一包清洗過的資料
+            # flash[:notice] = "文章已更新!"
+            # redirect_to '/stories' # 回到使用者故事列表頁
+                redirect_to stories_path, notice: "文章已更新!"
+            else
+                render :edit
+                # 去edit這個頁面，重新渲染一次（不是重新執行edit方法（action）），是請view中的edit頁面重畫一次
+            end
+    end
+
     private # 作用範圍是 以下 直到 本class的end為止，所以要寫在最後
     def story_params
         params.require(:story).permit(:title, :content) #省略return之寫法
         # return可適時省略，會自動 回傳 最後一行 的 執行結果
-    end 
+    end
     # 資料還沒清洗過 的話，資料送出轉址時會被預設檔下來，出現ActiveModel::ForbiddenAttributesError 錯誤訊息
     # 表示需要 資料清洗
     # 雖然有token的保護，有心人士無法透過其他程式或網站傳送資料進來這裡的後端，但他們還是可以在我們的頁面上用開發者模式，編輯html，新增欄位，成功送更多資料到這裡的後端
     # 此方法本身不需要被外部存取，只在這個class中會被用到（用來代替落落長的 資料清洗過的欄位資料），所以設為private方法
     # private：原則上只有 類別內部 可以操作，但實際上 只要沒有明確訊息接收者 都可以呼叫
+
+    def find_story
+        # 只要抓 當前 使用者的文章，並非資料庫所有文章（所有 使用者的所有文章）
+        @story = current_user.stories.find(params[:id])
+        # params[:id]文章編號
+        # 撈當前使用者編號為id之文章資料 給 實體變數story
+        # @story = Story.find_by(id: params[:id])
+    end
 
 end
 

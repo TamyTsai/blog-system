@@ -1,0 +1,23 @@
+<!-- 單一使用者文章列表頁面 -->
+<h1 class="title">我的文章列表</h1>
+
+<% @stories.each do |story| %> 
+    <!-- stories_controller餵@stories = current_user.stories.all.order(created_at: :desc)給view -->
+    <!-- story是@stories資料們（文章們）中的單一資料（單一文章） -->
+    <div class="content">
+        <!-- bulma的class="content"會讓其中元素有一些margin -->
+        <h2 class="title"><%= story.title %></h2>
+        <p><%= story.content %></p>
+        <p>
+            最後編輯時間：<%= time_ago_in_words(story.updated_at) %>
+            <!-- 會顯示世界標準時間格式 2024-06-01 12:23:03 UTC -->
+            <!-- 要去config > application.rb改時區 -->
+            <!-- 2024-06-01 20:23:03 +0800 (東8區)-->
+            <!-- time_ago_in_words(from_time, options = {})（到rails手冊查方法） -->
+            <!-- 顯示距今多久前更新 -->
+            <%= link_to '編輯文章', edit_story_path(story), class: 'button is-small' %>
+            <%= link_to '刪除文章', story_path(story), method: 'delete', class: 'button is-danger is-small', data: {confirm: "確定刪除該篇文章?"} %>
+        </p>
+    </div>
+    <hr>
+<% end %>

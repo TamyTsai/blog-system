@@ -7,6 +7,8 @@ class CreateStories < ActiveRecord::Migration[6.1]
       t.references :user, null: false, foreign_key: true
 
       t.timestamps
+      # 會長出 建立時間 與 更新時間 兩欄位
+      #  created_at: "2024-06-01 12:23:03.454264000 +0000", updated_at: "2024-06-01 12:23:03.454264000 +0000"
     end
   end
 end

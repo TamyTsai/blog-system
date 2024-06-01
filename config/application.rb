@@ -10,6 +10,10 @@ module Blog
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.1
+    config.time_zone = 'Asia/Taipei'
+    # 時區顯示方式設定為亞洲臺北
+    # 改設定檔後 要重新啟動伺服器 才會生效
+    # 2024-06-01 20:23:03 +0800
 
     # Configuration for the application, engines, and railties goes here.
     #
