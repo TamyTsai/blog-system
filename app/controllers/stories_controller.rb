@@ -41,17 +41,23 @@ class StoriesController < ApplicationController
         # 資料還沒清洗過 的話，會被預設檔下來，出現ActiveModel::ForbiddenAttributesError 錯誤訊息
         # 表示需要 資料清洗
         # 雖然有token的保護，有心人士無法透過其他程式或網站傳送資料進來這裡的後端，但他們還是可以在我們的頁面上用開發者模式，編輯html，新增欄位，成功送更多資料到這裡的後端
+        @story.status = 'published' if params[:publish]
+        # 流程控制if倒裝句
+        # 若按了name為'publish'的按鈕，就將@story中的status欄位改成published（將文章狀態改為 已發佈）
 
         if @story.save # 若成功將文章輸入框中的資料 寫入資料庫
-
-            redirect_to stories_path, notice: "文章新增成功!"
-            # redirect_to stories_path # 跳回文章列表頁
-            # "文章新增成功!"為要提示的訊息（需要透過view呈現在畫面（轉址頁面））
-            # 在離開頁面時，給一個flash，flash的key為notice
-            # 失敗的話可以用alert這個key
-            # notice與alert為特化版的key # 舊版rails沒有這種寫法
-            # flash的view適合放在layouts（公版）
-
+            if params[:publish] # 如果是按了name為'publish'的按鈕（發佈文章）
+                redirect_to stories_path, notice: "文章發佈成功!"
+                # redirect_to stories_path # 跳回文章列表頁
+                # "文章發佈成功!"為要提示的訊息（需要透過view呈現在畫面（轉址頁面））
+                # 在離開頁面時，給一個flash，flash的key為notice
+                # 失敗的話可以用alert這個key
+                # notice與alert為特化版的key # 舊版rails沒有這種寫法
+                # flash的view適合放在layouts（公版）
+            else # 如果不是按name為'publish'的按鈕（儲存草稿）（編輯文章頁面只有兩顆按鈕）
+                redirect_to edit_story_path(@story), notice: "草稿已儲存！"
+                # 留在文章編輯頁面
+            end
         else # 若 寫入失敗（格式不對、驗證沒過...）（在model做後端驗證（進資料庫前的驗證））          
             # redirect_to new_story_path
             # 就不跳回文章列表頁，而是停留在本頁面（新建文章頁面），但此寫法會轉回全新頁面，導致所有資料都要重填
