@@ -28,7 +28,7 @@ gem 'jbuilder', '~> 2.7'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
 # 會員系統套件，只要用 devise 就可以在幾分鐘甚至是幾十秒內就把會員註冊、登入、登出、忘記密碼等會員基本的功能完成
-gem 'devise', '~> 4.2'
+gem 'devise', '~> 4.9', '>= 4.9.4'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
