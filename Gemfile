@@ -31,6 +31,10 @@ gem 'bootsnap', '>= 1.4.4', require: false
 gem 'devise', '~> 4.9', '>= 4.9.4'
 # 有限狀態機，表示有限個狀態以及在這些狀態之間的轉移和動作等行為的數學計算模型，可以防止資料庫被亂動（手不用直接伸進資料庫）
 gem 'aasm', '~> 5.5'
+# friendly_id，讓網址可以不洩漏過多資訊
+gem 'friendly_id', '~> 5.5', '>= 5.5.1'
+# babosa可以改善friendly_id中的中文顯示
+gem 'babosa', '~> 2.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

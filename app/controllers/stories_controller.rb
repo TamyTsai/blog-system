@@ -136,11 +136,12 @@ class StoriesController < ApplicationController
 
     def find_story
         # 只要抓 當前 使用者的文章，並非資料庫所有文章（所有 使用者的所有文章）
-        @story = current_user.stories.find(params[:id])
+        @story = current_user.stories.friendly.find(params[:id])
         # params[:id]文章編號
         # 撈當前使用者編號為id之文章資料 給 實體變數story
         # Story.find(1) 找到id = 1 的資料（出問題直接噴例外：ActiveRecor::RecordNotFound）
         # 找不到資料很常見，所以直接在ApplicationController層級做例外處理（本controller 繼承自 ApplicationController）
+        # babosa要求要寫成 @story = current_user.stories.friendly.find(params[:id])才不會抓不到id（因為網址中原id已經被friendly id轉換）
 
         # @story = Story.find_by(id: params[:id]) 這樣寫會撈到 所有 使用者的 編號為id之文章
 
