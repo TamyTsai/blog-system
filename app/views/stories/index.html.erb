@@ -6,7 +6,13 @@
     <!-- story是@stories資料們（文章們）中的單一資料（單一文章） -->
     <div class="content">
         <!-- bulma的class="content"會讓其中元素有一些margin -->
-        <h2 class="title"><%= story.title %></h2>
+        <h2 class="title">
+            <%= story.title %>
+            <!-- <%= content_tag :span, '已發佈', class: 'tag is-primary' if story.status == 'published' %> -->
+            <!-- <span class="tag is-primary">已發佈</span> -->
+            <%= content_tag :span, '已發佈', class: 'tag is-primary' if story.published? %>
+            <!-- aasm寫法 用狀態機方法判斷是否為 發佈狀態 -->
+        </h2>
         <p><%= story.content %></p>
         <p>
             最後編輯時間：<%= time_ago_in_words(story.updated_at) %>
