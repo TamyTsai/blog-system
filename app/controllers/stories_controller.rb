@@ -82,13 +82,24 @@ class StoriesController < ApplicationController
             # update_attributes()
             # update_all()
             # 給一包清洗過的資料
-            # flash[:notice] = "文章已更新!"
-            # redirect_to '/stories' # 回到使用者故事列表頁
-                redirect_to stories_path, notice: "文章已更新!"
-            else
-                render :edit
-                # 去edit這個頁面，重新渲染一次（不是重新執行edit方法（action）），是請view中的edit頁面重畫一次
+
+            case
+            when params[:publish] # 若按了name為'publish'的按鈕
+                @story.publish! # 就將@story的狀態透過aasm使用上架動作 轉變狀態
+                redirect_to stories_path, notice: "文章已發佈!"
+                # redirect_to '/stories' # 回到使用者故事列表頁
+            when params[:unpublish] # 若按了name為'unpublish'的按鈕
+                @story.unpublish! # 就將@story的狀態透過aasm使用下架動作 轉變狀態
+                redirect_to stories_path, notice: "文章已下架!"
+            else # 若按了儲存草稿的按鈕
+                redirect_to edit_story_path(@story), notice: "文章草稿已儲存!"
+                # flash[:notice] = "文章草稿已儲存!"
+                # redirect_to edit_stories_path # 留在文章編輯頁面
             end
+        else
+            render :edit
+            # 去edit這個頁面，重新渲染一次（不是重新執行edit方法（action）），是請view中的edit頁面重畫一次
+        end
     end
 
     def destroy # 對應以DELETE動詞（事實上是GET DELETE是模擬的）進入的/stories/:id路徑（story_path）（刪除已建立的文章）

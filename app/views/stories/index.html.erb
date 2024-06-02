@@ -7,11 +7,12 @@
     <div class="content">
         <!-- bulma的class="content"會讓其中元素有一些margin -->
         <h2 class="title">
-            <%= story.title %>
+            <%= link_to story.title, edit_story_path(story), class: 'has-text-grey-darker' %>
+            <!-- 點文章標題 就進入該篇文章的編輯頁面 -->
             <!-- <%= content_tag :span, '已發佈', class: 'tag is-primary' if story.status == 'published' %> -->
-            <!-- <span class="tag is-primary">已發佈</span> -->
             <%= content_tag :span, '已發佈', class: 'tag is-primary' if story.published? %>
             <!-- aasm寫法 用狀態機方法判斷是否為 發佈狀態 -->
+            <!-- <span class="tag is-primary">已發佈</span> -->
         </h2>
         <p><%= story.content %></p>
         <p>

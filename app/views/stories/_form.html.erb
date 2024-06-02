@@ -1,5 +1,14 @@
 <!-- 新建文章new 與編輯已建立的文章edit 的 共用頁面-->
 
+<!-- 如果 文章物件 有任何錯誤，就印出錯誤訊息 -->
+<% if story.errors.any? %> 
+<!-- 判斷 文章物件 有沒有任何錯誤 -->
+    <div class="notification is-danger">
+        <%= story.errors.full_messages.to_sentence %>
+        <!-- 將文章物件中的錯誤訊息轉成句子 -->
+    </div>
+<% end %>
+
 <!-- form_for(MODEL) do |form|
 end -->
 <%= form_for(story) do |form| %> <!-- 還沒在controller建@story前，會出現錯誤：First argument in form cannot contain nil or be empty -->
@@ -15,7 +24,11 @@ end -->
     </div>
     <div class="field">
         <%= form.submit '儲存草稿', name: 'save_as_draft', class: 'button is-medium' %>
-        <%= form.submit '發佈文章', name: 'publish', class: 'button is-medium is-primary' %>
+        <%= form.submit '發佈文章', name: 'publish', class: 'button is-medium is-primary' if story.may_publish? %>
         <!-- 按下發佈文章按鈕後 會有publish key給controller用 -->
+        <!-- 流程控制倒裝句，如果文章為可發佈（表示現為草稿狀態），才出現此按鈕 -->
+        <%= form.submit '下架文章', name: 'unpublish', class: 'button is-medium is-danger' if story.may_unpublish? %>
+        <!-- 按下下架文章按鈕後 會有unpublish key給controller用 -->
+        <!-- 流程控制倒裝句，如果文章為可下架（表示現為發佈狀態），才出現此按鈕 -->
     </div>
 <% end %> 
