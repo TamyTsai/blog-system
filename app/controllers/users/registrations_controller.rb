@@ -53,12 +53,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_account_update_params
-    devise_parameter_sanitizer.permit(:account_update, keys: [:username, :intro])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:username, :intro, :avatar])
   end
   # 編輯更新個人資料
-  # 自己客制化增加username與intro欄位，所以要來這裡開
+  # 自己客制化增加username、intro、avatar欄位，所以要來這裡開
   # rails permmit效果
-  # 幫你把強參數（strong params）再加兩個欄位進來，讓username與intro欄位可以順利通過強參數
+  # 幫你把強參數（strong params）再加username、intro、avatar欄位進來，讓username、intro、avatar欄位可以順利通過強參數
 
   def update_resource(resource, params)
     resource.update_without_password(params)

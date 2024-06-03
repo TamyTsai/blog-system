@@ -13,6 +13,23 @@
   </div>
 
   <div class="field">
+    <%= f.label :avatar, '大頭照' %><br />
+    <div class="control">
+      <%= f.file_field :avatar %>
+      <!-- <input type="file" name="user[avatar]" id="user_avatar" /> -->
+    </div>
+    <!-- <%= image_tag current_user.avatar.variant(resize: '250x250') if current_user.avatar.attached? %> -->
+    <!-- 於畫面顯示 當前使用者avatar欄位裡的圖片 -->
+    <!-- .variant(resize: '250x250') 要安裝image_processing與ImageMagick才能使用 -->
+    <!-- 真的把尺寸改掉（檔案大小也會變），不是用html或css控制長寬 假裝變小（畫面顯示有變小 下載後一樣大） -->
+    <!-- if current_user.avatar.attached? 如果當前使用者有上傳大頭貼，才呈現圖片及做縮圖處理 -->
+    <!-- 用在module UserHelper定義的avatar(user, size: '250x250')方法 -->
+    <%= avatar(current_user) %>
+  </div>
+
+ 
+
+  <div class="field">
     <%= f.label :intro, '個人簡介' %> <br />
     <div class="control">
       <%= f.text_area :intro, class: "textarea is-medium", rows: 5 %>

@@ -32,6 +32,8 @@
             <!-- 顯示 目前使用者的email欄位內容 及 個人資料、登出按鈕、下拉選單 -->
               <div class="navbar-item has-dropdown is-hoverable">
                 <a class="navbar-link">
+                  <%= avatar(current_user, 50) %>
+                  <!-- <img class="user-avatar" src="http://localhost:3000/rails/active_storage/...png" /> -->
                   <%= current_user.email %> <!-- devise套件中的方法 -->
                    <!-- current_user是一個model物件，有email欄位 -->
                 </a>

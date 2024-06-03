@@ -23,7 +23,11 @@ gem 'jbuilder', '~> 2.7'
 # gem 'bcrypt', '~> 3.1.7'
 
 # Use Active Storage variant
-# gem 'image_processing', '~> 1.2'
+# 使用官方上傳檔案系統 處理縮圖
+gem 'image_processing', '~> 1.2'
+# $ brew install ImageMagick
+# ImageMagick為用ruby寫的gem，會呼叫ImageMagic來做縮圖
+# 沒安裝此套件的話，會縮圖失敗
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false

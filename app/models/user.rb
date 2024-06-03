@@ -14,4 +14,7 @@ class User < ApplicationRecord
   # 後端驗證
   # 使用者名稱欄位必填 且唯一不重複
 
+  has_one_attached :avatar
+  # 請rails active storage 幫每個使用者弄一個大頭貼功能
+
 end

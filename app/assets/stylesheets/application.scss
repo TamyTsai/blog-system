@@ -17,3 +17,12 @@
 
  /* 引入在vendor資料夾中自己放進去的bulma.css */
  /* require_tree .會把所有stylesheets中所有css引進來後再編譯，不想要的話可以拔掉 */
+
+ /* 放此檔案中的css 全站都吃得到 */
+.navbar-link {
+    .user-avatar {
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+}
+ 
