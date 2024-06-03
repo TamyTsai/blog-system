@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class Users::RegistrationsController < Devise::RegistrationsController
-  # before_action :configure_sign_up_params, only: [:create]
-  before_action :configure_account_update_params, only: [:update]
+  before_action :configure_sign_up_params, only: [:create] # 註冊頁面
+  before_action :configure_account_update_params, only: [:update] # 編輯更新個人資料頁面
 
   # GET /resource/sign_up
   # def new
@@ -45,9 +45,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # 不需要被類別外面存取的方法
 
   # If you have extra params to permit, append them to the sanitizer.
-  # def configure_sign_up_params
-  #   devise_parameter_sanitizer.permit(:sign_up, keys: [:attribute])
-  # end
+  def configure_sign_up_params
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:username])
+  end
+  # 註冊頁面 欄位客制化增加了 使用者名稱欄位 所以來這裡開
+  # 將強參數再加username欄位進來，讓username可以順利通過強參數
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_account_update_params

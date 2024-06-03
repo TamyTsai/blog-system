@@ -10,4 +10,8 @@ class User < ApplicationRecord
   # build 放在記憶體中，尚未儲存，.save後才寫進資料庫
   # create 直接寫進資料庫
 
+  validates :username, presence: true, uniqueness: true
+  # 後端驗證
+  # 使用者名稱欄位必填 且唯一不重複
+
 end
