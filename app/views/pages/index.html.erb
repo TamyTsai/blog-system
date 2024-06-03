@@ -1,1 +1,160 @@
-<h1 class="title">首頁</h1>
+<!-- 上半部 -->
+<section class="columns"> <!-- columns中的每個column沒指定要佔多大的話，會平分寬度 -->
+    <!-- 上方（左） -->
+    <section class="column">
+      <article>
+        <figure class="image">
+          <img src="https://fakeimg.pl/350x150/f0f0f0" alt="">
+        </figure>
+        <h2 class="title is-5">Creating a Pipeline to True Workplace Diversity</h2>
+        <p class="content">Providing resources, offering acceptance, and involving people of color are keys to making your company more diverse...</p>
+        <footer>
+          <p>Arielle Wiltz in Modus</p>
+          <p>Aug 7</p>
+        </footer>
+      </article>
+    </section>
+    <!-- 上方（左）結束 -->
+    <!-- 上方（中） -->
+    <section class="column">
+      <article class="media">
+        <figure class="media-left"> <!-- 圖靠左邊 -->
+          <img src="https://fakeimg.pl/100x100/">
+        </figure>
+        <div class="media-content">
+          <h2 class="title is-5">I Worked for an Amish Reality TV Show</h2>
+          <footer>
+            <p>Arielle Wiltz in Modus</p>
+            <p>Aug 7</p>
+          </footer>
+        </div>
+      </article>
+      <article class="media">
+        <figure class="media-left">
+          <img src="https://fakeimg.pl/100x100/">
+        </figure>
+        <div class="media-content">
+          <h2 class="title is-5">I Worked for an Amish Reality TV Show</h2>
+          <footer>
+            <p>Arielle Wiltz in Modus</p>
+            <p>Aug 7</p>
+          </footer>
+        </div>
+      </article>
+      <article class="media">
+        <figure class="media-left">
+          <img src="https://fakeimg.pl/100x100/">
+        </figure>
+        <div class="media-content">
+          <h2 class="title is-5">I Worked for an Amish Reality TV Show</h2>
+          <footer>
+            <p>Arielle Wiltz in Modus</p>
+            <p>Aug 7</p>
+          </footer>
+        </div>
+      </article>
+    </section>
+    <!-- 上方（中）結束 -->
+    <!-- 上方（右）-->
+    <section class="column">
+      <article>
+        <figure class="image">
+          <img src="https://fakeimg.pl/350x200/f0f0f0" alt="">
+        </figure>
+        <h2 class="title is-5">Creating a Pipeline to True Workplace Diversity</h2>
+        <p class="content">Providing resources, offering acceptance, and involving people of color are keys to making your company more diverse...</p>
+        <footer>
+          <p>Arielle Wiltz in Modus</p>
+          <p>Aug 7</p>
+        </footer>
+      </article>
+    </section>
+    <!-- 上方（右）結束 -->
+</section>
+
+<hr>
+
+<!-- 下半部 -->
+<section class="columns">
+    <!-- 下方（左） -->
+    <section class="column is-two-thirds"> <!-- 佔整個columns寬度的2/3-->
+        <% @stories.each do |story| %> 
+            <article class="media">
+                <div class="media-content">
+                <h2 class="title is-4"><%= link_to story.title, story_page_path(story.user.username, story), class: 'has-text-grey-dark' %></h2>
+                <!-- 'story_page_path(文章作者(stories資料表中的 使用者，該使用者 設定的 使用者名稱), 文章id)' -->
+                <!-- http://localhost:3000/＠文章作者（使用者名稱）/文章標題 -->
+                <p class="content"><%= story.content %></p>
+                <footer>
+                    <p>
+                        <%= link_to story.user.username, user_page_path(story.user.username), class: 'has-text-grey-dark' %> |
+                        <!-- 文章作者之使用者名稱 -->
+                        <%= time_ago_in_words(story.created_at) %>
+                        <!-- 文章建立時間 -->
+                    </p>
+                </footer>
+                </div>
+                <figure class="media-right"> <!-- 圖靠右邊 -->
+                <img src="https://fakeimg.pl/150x150/">
+                </figure>
+            </article>
+        <% end %>    
+    </section>
+    <!-- 下方（左）結束 -->
+    <!-- 下方（右） -->
+    <section class="column">
+      <h2 class="title is-4">Popular on Medium</h2>
+      <hr>
+
+      <article class="media">
+        <div class="media-left">01</div>
+        <div class="media-content">
+          <h3>Difficult Conversation Lessons From a Psychologist Who’s Been Dealing With People</h3>
+          <footer>
+            <p>Thomas Oppong</p>
+          </footer>
+        </div>
+      </article>
+
+      <article class="media">
+        <div class="media-left">02</div>
+        <div class="media-content">
+          <h3>Difficult Conversation Lessons From a Psychologist Who’s Been Dealing With People</h3>
+          <footer>
+            <p>Thomas Oppong</p>
+          </footer>
+        </div>
+      </article>
+
+      <article class="media">
+        <div class="media-left">03</div>
+        <div class="media-content">
+          <h3>Difficult Conversation Lessons From a Psychologist Who’s Been Dealing With People</h3>
+          <footer>
+            <p>Thomas Oppong</p>
+          </footer>
+        </div>
+      </article>
+
+      <article class="media">
+        <div class="media-left">04</div>
+        <div class="media-content">
+          <h3>Difficult Conversation Lessons From a Psychologist Who’s Been Dealing With People</h3>
+          <footer>
+            <p>Thomas Oppong</p>
+          </footer>
+        </div>
+      </article>
+
+      <article class="media">
+        <div class="media-left">05</div>
+        <div class="media-content">
+          <h3>Difficult Conversation Lessons From a Psychologist Who’s Been Dealing With People</h3>
+          <footer>
+            <p>Thomas Oppong</p>
+          </footer>
+        </div>
+      </article>
+    </section>
+    <!-- 下方（右）結束 -->
+</section>

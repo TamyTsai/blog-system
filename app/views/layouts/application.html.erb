@@ -11,12 +11,12 @@
   </head>
 
   <body>
-    <%= render 'shared/frontend/navbar' %>
-    <!-- 將_navbar.html.erb局部渲染進來 -->
-    <%= render 'shared/frontend/flash' if notice %>
-    <!-- controller中寫的flash notice只會出現一次，重新整理頁面就會不見，但_flash.html.erb有個div，所以即使內容不見，還是會留下一個框框 -->
-    <!-- 所以要寫流程控制，notice有東西的話，再做部分渲染 -->
     <div class="container"> <!-- bulma的container有一定的margin空間 -->
+      <%= render 'shared/frontend/navbar' %>
+      <!-- 將_navbar.html.erb局部渲染進來 -->
+      <%= render 'shared/frontend/flash' if notice %>
+      <!-- controller中寫的flash notice只會出現一次，重新整理頁面就會不見，但_flash.html.erb有個div，所以即使內容不見，還是會留下一個框框 -->
+      <!-- 所以要寫流程控制，notice有東西的話，再做部分渲染 -->
       <%= yield %>
     </div>
   </body>
