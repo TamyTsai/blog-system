@@ -16,3 +16,8 @@ APP_ROOT = File.expand_path("..", __dir__)
 Dir.chdir(APP_ROOT) do
   Webpacker::DevServerRunner.run(ARGV)
 end
+
+# 會去檢查檔案有無變化，有變化就做打包
+# $ bin/webpack-dev-server :隨時打包有變化的檔案
+# 開發時，就一直在背景開著
+# 檔案經過編譯，瀏覽器速度就會變快

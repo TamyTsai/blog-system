@@ -7,7 +7,9 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <!-- javascript_include_tag 'application', 'data-turbolinks-track': 'reload' -->
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %> 
+    <!-- 安裝webpacker後要這樣寫，這樣就會去app的javascript中找檔案，而非去app中assets的javascript中找檔案 -->
   </head>
 
   <body>

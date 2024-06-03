@@ -12,7 +12,15 @@ gem 'puma', '~> 5.0'
 # Use SCSS for stylesheets
 gem 'sass-rails', '>= 6'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
+# webpack：前端圈主流的打包工具
+# 可幫你將js或是css這些檔案 全部打包好，壓縮成一個檔案
+# webpacker是webpack的gem
+# Webpacker 是一種 Ruby Gem。當 rails new 專案時，Rails 會自動安裝 Webpacker，Webpacker 則會「幫忙安裝一切 Webpack 工具所需的檔案。」
+# Webpack 是一種 自動化 編譯 及 打包 的工具。它幫我們把檔案 編譯 成 瀏覽器 看得懂的內容，並打包好上傳到 server，再提供給 瀏覽器去解析
 gem 'webpacker', '~> 5.0'
+# $ rails webpacker:install 會幫你把相關的骨架建立起來
+# 會把套件安裝在node modules的目錄中
+
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
