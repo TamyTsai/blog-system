@@ -1,0 +1,11 @@
+// 寫在這裡的css可以被webpacker即時邊際打包
+// hard reload
+
+@import 'stories.scss';
+
+.navbar-link {
+    .user-avatar {
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+}
