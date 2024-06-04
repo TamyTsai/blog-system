@@ -84,8 +84,9 @@
                 <h2 class="title is-4"><%= link_to story.title, story_page_path(story.user.username, story), class: 'has-text-grey-dark' %></h2>
                 <!-- 'story_page_path(文章作者(stories資料表中的 使用者，該使用者 設定的 使用者名稱), 文章id)' -->
                 <!-- http://localhost:3000/＠文章作者（使用者名稱）/文章標題 -->
-                <p class="content"><%= story.content %></p>
-                <footer>
+                <p class="content"><%= strip_tags(story.content).truncate(200) %></p>
+                <!-- strip_tags 可以把html標籤撕掉 -->
+                <!-- trucncate(留下的字數)可以把文字截短 -->
                     <p>
                         <%= link_to story.user.username, user_page_path(story.user.username), class: 'has-text-grey-dark' %> |
                         <!-- 文章作者之使用者名稱 -->

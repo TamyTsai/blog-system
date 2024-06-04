@@ -31,6 +31,9 @@ class Story < ApplicationRecord
   # default_scope
   # 可幫 所有的查詢 預設套用Scope
   # 副作用是 陰魂不散（擺脫scope：unscopte(:where)）
+  scope :published_stories, -> {where(status: 'published')} 
+  # 做一個scopre方法 名為published_stories（已發佈的文章）
+  # 使用此方法會 套用 篩選status欄位 值為published的 查詢條件（用lambda 建立 物件化 之 程式碼區塊block）
 
   # 實體方法instance methods
   def destroy

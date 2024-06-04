@@ -2,10 +2,26 @@ class PagesController < ApplicationController
 
     def index # 全站首頁 的action
         # @stories = Story.all # 將stories資料表中的所有資料撈出來，指定給實體變數@stories
-        @stories = Story.order(created_at: :desc).includes(:user)
+        # @stories = Story.order(created_at: :desc).includes(:user)
         # 將stories資料表中的所有資料撈出來由建立日期新到舊排序（不限當前使用者的文章，而是stories資料表中所有文章）
         # vs stroy controller：@stories = current_user.stories.all.order(created_at: :desc) （當前使用者的文章）
         # 用.includes(:user)解決N+1問題（撈資料時的SQL語法會改用IN的寫法來寫）
+
+        # 篩選出狀態為已發佈之文章
+        # @stories = Story.where(status: 'published').order(created_at: :desc).includes(:user)
+        # 此為新手寫法，老手寫法為去model加scope，提升程式碼再用性，且如果要改變搜尋條件，只要去model改，所有用此scope方法篩選的地方就會一次被修改
+        # @stories = Story.published_stories.order(created_at: :desc).includes(:user)
+        # rails c
+            #    (1.8ms)  SELECT COUNT(*) FROM "stories" WHERE "stories"."deleted_at" IS NULL
+            #  => 12 
+            #  2.7.8 :002 > Story.published_stories.count
+            #     (2.3ms)  SELECT COUNT(*) FROM "stories" WHERE "stories"."deleted_at" IS NULL AND "stories"."status" = $1  [["status", "published"]]
+            #   => 4 
+            #  2.7.8 :003 > Story.published.count （.published為aasm送的方法）
+            #     (1.0ms)  SELECT COUNT(*) FROM "stories" WHERE "stories"."deleted_at" IS NULL AND "stories"."status" = $1  [["status", "published"]]
+            #   => 4 
+        # 更進階寫法為直接用aasm送的方法
+        @stories = Story.published.order(created_at: :desc).includes(:user)
 
         # 原始伺服器log顯示之查詢語法
             # Started GET "/" for ::1 at 2024-06-03 19:56:00 +0800
