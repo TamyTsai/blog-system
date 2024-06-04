@@ -1,0 +1,47 @@
+<!-- stimulus範例 -->
+<!-- stimulus 可達到UJS -->
+<!--HTML from anywhere-->
+<!-- 
+<div data-controller="hello">
+    <input data-hello-target="name" type="text">
+  
+    <button data-action="click->hello#greet">
+      Greet
+    </button>
+  
+    <span data-hello-target="output">
+    </span>
+</div> 
+data-controller data-target data-action 類似 rails 的 controller中有很多action
+-->
+<!-- 
+// hello_controller.js
+import { Controller } from "stimulus" 從stimulus這個框架 import一個controller
+
+export default class extends Controller { 寫一個class繼承他
+  static targets = [ "name", "output" ] 寫了output後，之後就會有一個outputTarget方法（name也是，出現nameTarget）
+
+  greet() {
+    this.outputTarget.textContent =
+      `Hello, ${this.nameTarget.value}!`
+  }
+} 
+-->
+
+<div data-controller='demo'> <!-- demo controller -->
+    <input type="text" data-target="demo.content"> <!-- contentTarget 方便在js抓html元素-->
+    <!-- demo.content表示是在data-controller='demo'的元件 -->
+    <!-- <button data-action="click->demo#pushme">按我</button> -->
+    <!-- 預設為click 所以可省略 -->
+    <button data-action="demo#pushme">按我</button> <!-- pushme action（在data controller中） -->
+    <!-- 按下此按鈕，就會執行demo controller的pushme action -->
+</div>
+
+<div data-controller='demo'>
+    <input type="text" data-target="demo.content">
+    <!-- demo.content表示是在data-controller='demo'的元件 -->
+    <!-- <button data-action="click->demo#pushme">按我</button> -->
+    <!-- 預設為click 所以可省略 -->
+    <button data-action="demo#pushit">按他</button>
+    <!-- 按下此按鈕，就會執行demo controller的pushme action -->
+</div>
