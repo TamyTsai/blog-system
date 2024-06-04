@@ -21,8 +21,15 @@ class PagesController < ApplicationController
             #     (1.0ms)  SELECT COUNT(*) FROM "stories" WHERE "stories"."deleted_at" IS NULL AND "stories"."status" = $1  [["status", "published"]]
             #   => 4 
         # 更進階寫法為直接用aasm送的方法
-        @stories = Story.published.order(created_at: :desc).includes(:user)
+        # @stories = Story.published.order(created_at: :desc).includes(:user)
 
+        # 想同時解決封面照片讀取的N+1問題的話
+        # @stories = Story.published.with_attached_cover_image.order(created_at: :desc).includes(:user)
+        # .with_attached_欄位名稱 為 rails的方法
+        # 遇到冗長且還有機會再用到的方法，可以把程式碼搬到model中，以利程式碼的再用
+        @stories = Story.published_stories
+
+        # N+1問題：
         # 原始伺服器log顯示之查詢語法
             # Started GET "/" for ::1 at 2024-06-03 19:56:00 +0800
             # (0.5ms)  SELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC

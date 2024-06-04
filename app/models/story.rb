@@ -31,9 +31,17 @@ class Story < ApplicationRecord
   # default_scope
   # 可幫 所有的查詢 預設套用Scope
   # 副作用是 陰魂不散（擺脫scope：unscopte(:where)）
-  scope :published_stories, -> {where(status: 'published')} 
-  # 做一個scopre方法 名為published_stories（已發佈的文章）
+
+  # scope :published_stories, -> {where(status: 'published')} 
+  # 做一個scope方法 名為published_stories（已發佈的文章）
   # 使用此方法會 套用 篩選status欄位 值為published的 查詢條件（用lambda 建立 物件化 之 程式碼區塊block）
+  scope :published_stories, -> { published.with_attached_cover_image.order(created_at: :desc).includes(:user) } 
+  # 在controller對 應用程式物件 使用此方法（published_stories）時，會做以下動作：
+    # 篩選狀態為已發佈的文章（aasm的方法）
+    # 一起解決cover_image欄位讀取上的N+1問題
+    # 撈出來的文章 按建立日期由新到舊排序
+    # 解決N+1問題
+
 
   # 實體方法instance methods
   def destroy

@@ -95,9 +95,15 @@
                     </p>
                 </footer>
                 </div>
-                <figure class="media-right"> <!-- 圖靠右邊 -->
-                <img src="https://fakeimg.pl/150x150/">
-                </figure>
+
+                <% if story.cover_image.attached? %>
+                <!-- 如果文章有上傳封面照片，再顯示此區塊（流程判斷加在div外面，讓div的顯示與否也一起被操控） -->
+                  <figure class="media-right"> <!-- 圖靠右邊 -->
+                    <%= image_tag story.cover_image.variant(resize: '150x150') %>
+                    <!-- <img src="https://fakeimg.pl/150x150/"> -->
+                    <!-- 使用rails Active Storage 上傳的圖片會被存在資料庫，所以讀取此頁面的時候會有N+1問題 -->
+                  </figure>
+                <% end %>
             </article>
         <% end %>    
     </section>
