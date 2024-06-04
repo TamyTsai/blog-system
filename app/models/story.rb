@@ -10,12 +10,18 @@ class Story < ApplicationRecord
   include AASM
   # https://github.com/aasm/aasm
 
-  belongs_to :user
-  # 後端驗證，進資料庫前的驗證  
+  # 驗證validations
   validates :title, presence: true
   # 注意:title為符號
   # 文章標題欄位必填，沒寫，就會寫入資料庫失敗
 
+  # 關聯relationships
+  belongs_to :user
+  # 後端驗證，進資料庫前的驗證  
+  has_one_attached :cover_image
+  # 請rails active storage 幫每篇文章弄一個封面照功能
+
+  # Scopes
   default_scope { where(deleted_at: nil) }
   # 對stories資料表的所有查詢，都要先篩選出deleted_at欄位值nil的資料
   # Scope
@@ -26,6 +32,7 @@ class Story < ApplicationRecord
   # 可幫 所有的查詢 預設套用Scope
   # 副作用是 陰魂不散（擺脫scope：unscopte(:where)）
 
+  # 實體方法instance methods
   def destroy
     update(deleted_at: Time.now) 
   end
@@ -33,6 +40,14 @@ class Story < ApplicationRecord
   # 這邊覆寫destroy方法功能變為軟刪除
   # update(deleted_at: Time.now) # 使用destroy方法時，將當下的時間寫到stories資料表中的deleted_at欄位
 
+  # 改善friendly id 中的中文顯示
+  def normalize_friendly_id(input)
+    input.to_s.to_slug.normalize(transliterations: :russian).to_s
+  end
+  # http://localhost:3000/stories/6-%E6%B8%AC%E8%A9%A6friendly-id/edit
+  # 經過babosa轉換後為 http://localhost:3000/stories/6-測試friendly-id/edit
+
+  # aasm
   aasm column: 'status', no_direct_assignment: true do
     # column: 'status' 原預設會去資料表找名叫aasm的欄位，這裡改成去找名為status的欄位
     # no_direct_assignment: true 不允許手直接伸進資料庫更改該欄位之值
@@ -52,13 +67,6 @@ class Story < ApplicationRecord
       transitions from: :published, to: :draft
     end
   end
-
-  # 改善friendly id 中的中文顯示
-  def normalize_friendly_id(input)
-      input.to_s.to_slug.normalize(transliterations: :russian).to_s
-  end
-  # http://localhost:3000/stories/6-%E6%B8%AC%E8%A9%A6friendly-id/edit
-  # 經過babosa轉換後為 http://localhost:3000/stories/6-測試friendly-id/edit
 
   private
 

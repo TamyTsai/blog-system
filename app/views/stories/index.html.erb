@@ -23,7 +23,7 @@
             <!-- time_ago_in_words(from_time, options = {})（到rails手冊查方法） -->
             <!-- 顯示距今多久前更新 -->
             <%= link_to '編輯文章', edit_story_path(story), class: 'button is-small' %>
-            <%= link_to '刪除文章', story_path(story), data-method: 'delete', class: 'button is-danger is-small', data: {confirm: "確定刪除該篇文章?"} %>
+            <%= link_to '刪除文章', story_path(story), method: 'delete', class: 'button is-danger is-small', data: {confirm: "確定刪除該篇文章?"} %>
             <!-- 連結中有data-method這個屬性的話，就會根據屬性的值（delete）去模擬該動作，這個手法是js做的 -->
             <!-- 其實是另外寫在某個地方，然後去驗證，當要刻這個按鈕時，如果有data-method屬性時這樣 -->
             <!-- stimulus此js框架將此寫法發揚光大 data-controller data-target data-action -->

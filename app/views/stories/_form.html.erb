@@ -12,6 +12,21 @@
 <!-- form_for(MODEL) do |form|
 end -->
 <%= form_for(story) do |form| %> <!-- 還沒在controller建@story前，會出現錯誤：First argument in form cannot contain nil or be empty -->
+    
+    <div class="field">
+        <%= image_tag story.cover_image.variant(resize: '1000x800'), class: 'cover-image' if story.cover_image.attached? %>
+        <%= form.label :cover_image, '文章封面照' %><br />
+        <!-- label自動會跟在上傳的圖片後面（同一列），如果要讓image tag變成block元素，要去css寫（先給一個class名稱 方便css選取） -->
+        <div class="control">
+        <%= form.file_field :cover_image %>
+        <!-- <input type="file" name="story[cover_image]" id="story_cover_image" /> -->
+        </div>
+        <!-- 於畫面顯示 故事cover_image欄位裡的圖片 -->
+        <!-- .variant(resize: '??x??') 要安裝image_processing與ImageMagick才能使用 -->
+        <!-- 真的把尺寸改掉（檔案大小也會變），不是用html或css控制長寬 假裝變小（畫面顯示有變小 下載後一樣大） -->
+        <!-- if story.cover_image.attached? 如果故事有上傳封面照片，才呈現圖片及做縮圖處理 -->
+    </div>
+
     <div class="field">
         <%= form.label :title, '文章標題' %>
         <%= form.text_field :title, class: 'input is-primary is-medium' %> 

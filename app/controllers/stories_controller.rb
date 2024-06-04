@@ -41,9 +41,13 @@ class StoriesController < ApplicationController
         # 資料還沒清洗過 的話，會被預設檔下來，出現ActiveModel::ForbiddenAttributesError 錯誤訊息
         # 表示需要 資料清洗
         # 雖然有token的保護，有心人士無法透過其他程式或網站傳送資料進來這裡的後端，但他們還是可以在我們的頁面上用開發者模式，編輯html，新增欄位，成功送更多資料到這裡的後端
-        @story.status = 'published' if params[:publish]
+        
+        # @story.status = 'published' if params[:publish]
         # 流程控制if倒裝句
-        # 若按了name為'publish'的按鈕，就將@story中的status欄位改成published（將文章狀態改為 已發佈）
+        # 若按了name為'publish'的按鈕，就將@story中的status欄位改成（直接改資料庫欄位）published（將文章狀態改為 已發佈）
+        # story modle 已經設定  aasm column: 'status', no_direct_assignment: true，不能直接動資料庫，所以這裡要改寫
+        @story.publish! if params[:publish]
+        # 若按了name為'publish'的按鈕，就將@story的狀態透過aasm使用上架動作 轉變狀態
 
         if @story.save # 若成功將文章輸入框中的資料 寫入資料庫
             if params[:publish] # 如果是按了name為'publish'的按鈕（發佈文章）
@@ -125,7 +129,7 @@ class StoriesController < ApplicationController
 
     private # 作用範圍是 以下 直到 本class的end為止，所以要寫在最後
     def story_params
-        params.require(:story).permit(:title, :content) #省略return之寫法
+        params.require(:story).permit(:title, :content, :cover_image) #省略return之寫法
         # return可適時省略，會自動 回傳 最後一行 的 執行結果
     end
     # 資料還沒清洗過 的話，資料送出轉址時會被預設檔下來，出現ActiveModel::ForbiddenAttributesError 錯誤訊息
@@ -133,6 +137,7 @@ class StoriesController < ApplicationController
     # 雖然有token的保護，有心人士無法透過其他程式或網站傳送資料進來這裡的後端，但他們還是可以在我們的頁面上用開發者模式，編輯html，新增欄位，成功送更多資料到這裡的後端
     # 此方法本身不需要被外部存取，只在這個class中會被用到（用來代替落落長的 資料清洗過的欄位資料），所以設為private方法
     # private：原則上只有 類別內部 可以操作，但實際上 只要沒有明確訊息接收者 都可以呼叫
+    # 要增加上傳封面照片功能時，要來這裡加上該欄位名稱，讓其可順利通過強參數
 
     def find_story
         # 只要抓 當前 使用者的文章，並非資料庫所有文章（所有 使用者的所有文章）
