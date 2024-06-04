@@ -3,6 +3,8 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.7.8'
 
+# production群組
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'rails', '~> 6.1.4', '>= 6.1.4.6'
 # Use postgresql as the database for Active Record
@@ -48,6 +50,7 @@ gem 'friendly_id', '~> 5.5', '>= 5.5.1'
 # babosa可以改善friendly_id中的中文顯示
 gem 'babosa', '~> 2.0'
 
+# 開發群組
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -62,6 +65,14 @@ group :development do
   gem 'listen', '~> 3.3'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+  # foreman 可方便在本機端一次執行多個指令（啟動伺服器 等）（跟production不太相關，所以放在開發群組）
+  # 會去你的專案找Procfile檔案
+  # 新建Profile，並在裡面寫下希望foreman領班幫你做的事
+  # 例如：
+  # web: bin/rails server -p 3000：表示會去port3000幫你開啟rails伺服器（自己用rails開伺服器，會預設開在port3000，所以不用特別打）（前面web:可隨便取 不一定要叫此名，foreman開始跑後可以用名稱辨別做了什麼事）
+  # webpacker: bin/webpack-dev-server：幫你開啟webpack伺服器
+  # $ foreman start 後 就會開始跑Procfile中寫的指令
+  gem 'foreman', '~> 0.88.1'
 end
 
 group :test do
