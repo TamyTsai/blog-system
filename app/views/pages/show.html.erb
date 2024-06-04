@@ -1,0 +1,60 @@
+<section class="columns has-text-centered story-content">
+  <section class="column is-offset-3 is-6"> <!-- 本column為columns六格中的第三格（左到右） -->
+    <h1 class="title"><%= @story.title %></h1>
+
+    <span class="profile">
+      <!-- 文章作者大頭照 -->
+      <!-- <img src="https://fakeimg.pl/50x50/" class="avatar">  -->
+      <%= image_tag @story.user.avatar.variant(resize: "50x50"), class: 'avatar' if @story.user.avatar.attached? %>
+      <!-- <img class="avatar" src="http://localhost:3000/rails/active_storage/representations/redirect/...png" /> -->
+      <!-- stories資料表中被撈出的文章 的 使用者，該使用者 的 大頭照 -->
+
+      <!-- 文章作者使用者名稱 -->
+      <span class="username"><%= @story.user.username %></span>
+
+      <a href="#" class="follow-button">追蹤</a>
+    </span>
+
+    <article class="content">
+      <!--  文章封面照片 -->
+      <!-- <img src="https://fakeimg.pl/1000x500/" class="cover-image" alt=""> -->
+      <%= image_tag @story.cover_image.variant(resize: '1000x500'), class: 'cover-image' if @story.cover_image.attached? %>
+
+      <!-- 文章內文 -->
+      <%= simple_format(@story.content) %>
+      <!-- simple_format是rails的一個helper，可以辨別顯示的內容中的html標籤語法，且會正確呈現換行 -->
+
+      <footer>
+        拍手 0
+      </footer>
+    </article>
+    <hr>
+    <section class="comments">
+      <h2>留言</h2>
+
+      <!-- 使用AJAX非同步JavaScript及xml -->
+      <!-- 將表單按下送出時，不需要換頁（重新導向），就可以把表單中的內容送往後端，寫進資料庫，並在寫入成功後，於同一頁面直接呈現 剛剛寫入資料庫的資料 -->
+      <!-- 增加使用者體驗 -->
+      <section class="comment-editor">
+        <form action="" method="post">
+          <textarea name="" id="" rows="8" cols="40" class="textarea is-small"></textarea>
+          <button type="submit" class="button is-primary is-fullwidth">送出</button>
+        </form>
+      </section>
+
+      <section>
+        <article class="comment">
+          <span class="profile">
+            <img src="https://fakeimg.pl/50x50/" class="avatar"> 
+            <span class="username">Tsai</span>
+          </span>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </article>
+
+        <article class="comment">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </article>
+      </section>
+    </section>
+  </section>
+</section>

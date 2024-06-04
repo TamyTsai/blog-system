@@ -1,5 +1,7 @@
 class PagesController < ApplicationController
 
+    before_action :find_story, only: [:show]
+
     def index # 全站首頁 的action
         # @stories = Story.all # 將stories資料表中的所有資料撈出來，指定給實體變數@stories
         # @stories = Story.order(created_at: :desc).includes(:user)
@@ -91,9 +93,19 @@ class PagesController < ApplicationController
     end
 
     def show # 檢視單篇文章頁面 的 action
+        # 抓出特定文章
+        # before action已做
     end
 
     def user # 檢視單一作者所有文章頁面 的 action
+    end
+
+    private
+
+    def find_story
+        @story = Story.friendly.find(params[:story_id])
+        # 抓出id為:story_id的文章
+        # babosa要求要寫成 @story = current_user.stories.friendly.find(params[:story_id])才不會抓不到id（因為網址中原id已經被friendly id轉換）
     end
 
 end
