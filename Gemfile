@@ -23,6 +23,7 @@ gem 'webpacker', '~> 5.0'
 # $ rails webpacker:install 會幫你把相關的骨架建立起來
 # 會把套件安裝在node modules的目錄中
 
+
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -49,6 +50,9 @@ gem 'aasm', '~> 5.5'
 gem 'friendly_id', '~> 5.5', '>= 5.5.1'
 # babosa可以改善friendly_id中的中文顯示
 gem 'babosa', '~> 2.0'
+# paranoia軟刪除
+# 正常功能 並非開發或測試才會用到的功能
+gem 'paranoia', '~> 2.6', '>= 2.6.3'
 
 # 開發群組
 group :development, :test do

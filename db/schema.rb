@@ -63,7 +63,7 @@ ActiveRecord::Schema.define(version: 2024_06_03_020702) do
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "deleted_at"
     t.string "slug"
-    t.index ["deleted_at"], name: "index_stories_on_deleted_at"
+    t.index ["deleted_at"], name: "index_stories_on_deleted_at" # 預設值為nil
     t.index ["slug"], name: "index_stories_on_slug", unique: true
     t.index ["user_id"], name: "index_stories_on_user_id"
   end

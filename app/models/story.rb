@@ -1,4 +1,10 @@
 class Story < ApplicationRecord
+  # 軟刪除套件paranoia
+  acts_as_paranoid
+  # 不用自己寫default scope 也不用覆寫 destroy方法
+  # 刪除後進rails c就看不到該筆資料，但進postgre資料庫還看得到
+  # 真的想刪除資料的話，使用really_destroy!
+  
   extend FriendlyId # 擴充該模組的方法，將方法由實體方法擴充為類別方法，以利作用在Story這個class（model應用系統物件）上
   friendly_id :slug_story, use: :slugged
   # 範例：
@@ -22,7 +28,7 @@ class Story < ApplicationRecord
   # 請rails active storage 幫每篇文章弄一個封面照功能
 
   # Scopes
-  default_scope { where(deleted_at: nil) }
+  # default_scope { where(deleted_at: nil) } # 使用paranoia套件就不用這行了
   # 對stories資料表的所有查詢，都要先篩選出deleted_at欄位值nil的資料
   # Scope
   # 把一群條件整理成 一個Scope
@@ -44,9 +50,11 @@ class Story < ApplicationRecord
 
 
   # 實體方法instance methods
-  def destroy
-    update(deleted_at: Time.now) 
-  end
+
+  # 因使用paranoia套件，所以 軟刪除文章的方法 不用自己覆寫destroy方法了
+  # def destroy
+  #   update(deleted_at: Time.now) 
+  # end
   # 原本的destroy方法，會真的把資料刪除，救不回來，由資料庫中抹除
   # 這邊覆寫destroy方法功能變為軟刪除
   # update(deleted_at: Time.now) # 使用destroy方法時，將當下的時間寫到stories資料表中的deleted_at欄位
