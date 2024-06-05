@@ -32,15 +32,7 @@
     <section class="comments">
       <h2>留言</h2>
 
-      <!-- 使用AJAX非同步JavaScript及xml -->
-      <!-- 將表單按下送出時，不需要換頁（重新導向），就可以把表單中的內容送往後端，寫進資料庫，並在寫入成功後，於同一頁面直接呈現 剛剛寫入資料庫的資料 -->
-      <!-- 增加使用者體驗 -->
-      <section class="comment-editor">
-        <form action="" method="post">
-          <textarea name="" id="" rows="8" cols="40" class="textarea is-small"></textarea>
-          <button type="submit" class="button is-primary is-fullwidth">送出</button>
-        </form>
-      </section>
+      <%= render 'comment_area' %>
 
       <section>
         <article class="comment">

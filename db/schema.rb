@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_06_03_020702) do
+ActiveRecord::Schema.define(version: 2024_06_05_012607) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,6 +43,18 @@ ActiveRecord::Schema.define(version: 2024_06_03_020702) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "comments", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "story_id", null: false
+    t.text "content"
+    t.datetime "deleted_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["deleted_at"], name: "index_comments_on_deleted_at"
+    t.index ["story_id"], name: "index_comments_on_story_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string "slug", null: false
     t.integer "sluggable_id", null: false
@@ -63,7 +75,7 @@ ActiveRecord::Schema.define(version: 2024_06_03_020702) do
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "deleted_at"
     t.string "slug"
-    t.index ["deleted_at"], name: "index_stories_on_deleted_at" # 預設值為nil
+    t.index ["deleted_at"], name: "index_stories_on_deleted_at"
     t.index ["slug"], name: "index_stories_on_slug", unique: true
     t.index ["user_id"], name: "index_stories_on_user_id"
   end
@@ -85,5 +97,7 @@ ActiveRecord::Schema.define(version: 2024_06_03_020702) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "comments", "stories"
+  add_foreign_key "comments", "users"
   add_foreign_key "stories", "users"
 end

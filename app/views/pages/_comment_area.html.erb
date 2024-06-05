@@ -1,0 +1,19 @@
+<!-- 使用AJAX非同步JavaScript及xml -->
+<!-- 將表單按下送出時，不需要換頁（重新導向），就可以把表單中的內容送往後端，寫進資料庫，並在寫入成功後，於同一頁面直接呈現 剛剛寫入資料庫的資料 -->
+<!-- 增加使用者體驗 -->
+
+
+<section class="comment-editor">
+    <% if user_signed_in? %> <!-- 判斷有登入時，才出現本留言輸入區塊 -->
+    <!-- divise送的helper -->
+    <!-- To verify if a user is signed in, use the following helper: -->
+    <!-- user_signed_in? -->
+        <form action="" method="post">
+            <textarea name="" id="" rows="8" cols="40" class="textarea is-small"></textarea>
+            <button type="submit" class="button is-primary is-fullwidth">送出</button>
+        </form>
+    <% else %> <!-- 未登入時，出現登入與註冊按鈕 -->
+        <%= link_to '請先登入', new_user_session_path, class: 'button is-success' %>
+        <%= link_to '會員註冊', new_user_registration_path, class: 'button is-info' %>
+    <% end %>
+</section>
