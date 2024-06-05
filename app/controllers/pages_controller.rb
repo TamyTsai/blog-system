@@ -95,6 +95,18 @@ class PagesController < ApplicationController
     def show # 檢視單篇文章頁面 的 action
         # 抓出特定文章
         # before action已做
+
+        @comment = @story.comments.new
+        # 每一篇故事會有很多留言（要先去story model設定 has_many :comments 才會有comments方法可用）
+        # has_many :comments 動態長出四方法：comments comments= build create
+        # 建立comments物件 並綁在對應的story底下
+        # 做出這篇文章專屬的comment物件出來（空的 沒資料內容，傳給show的表單用）
+        # 於controller在story（before action已抓出要被留言的單一文章）下用has_many所長出來的comments方法建立comment物件，指定給 實體變數@comment
+        # 於show view 將 實體變數@comment 指定給 區域變數comment
+        # 在show所使用的部分選染頁面中 使用 區域變數comment
+
+        @comments = @story.comments.order(id: :desc)
+        # 撈出此篇文章中的所有留言，並按照comment的id做反向排序，指定給 @comments物件
     end
 
     def user # 檢視單一作者所有文章頁面 的 action

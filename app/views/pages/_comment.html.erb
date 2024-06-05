@@ -1,0 +1,11 @@
+<article class="comment">
+    <span class="profile">
+    <%= image_tag comment.user.avatar.variant(resize: "50x50"), class: 'avatar' if comment.user.avatar.attached? %>
+    <span class="username"><%= comment.user.username %></span>
+    </span>
+    <%= simple_format(comment.content) %>
+    <!-- simple_format可以正確顯示換行 空格 -->
+</article>
+
+<!-- comment區域變數是從要做局部選染的檔案中 collection: @comments來的 -->
+<!-- 慣例上collection: @comments複數，就會產生 單數區域變數 給局部渲染檔案用 -->

@@ -23,7 +23,7 @@ class CommentsController < ApplicationController
             # rails的UJS機制來說，rails會執行 回傳的 js
             # view 的 form_with 有寫到 remote: ture（預設），資料傳送出去，傳回來是一包js的話，就執行該js
             # <Comment id: 1, user_id: 1（第1個使用者）, story_id: 12（在第12篇文章下）, content: "這是留言", deleted_at: nil, created_at: "2024-06-05 11:19:25.647908000 +0800", updated_at: "2024-06-05 11:19:25.647908000 +0800"> 
-            # 1號使用者 在 12號文章 寫下 「這是留言」的留言
+            # 1號留言 為 1號使用者 在 12號文章 寫下 「這是留言」的留言
         else # 若 寫入失敗（格式不對、驗證沒過...）（在model做後端驗證（進資料庫前的驗證））          
             render js: "alert('error')"
         end
