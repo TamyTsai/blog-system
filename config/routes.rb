@@ -6,7 +6,14 @@ Rails.application.routes.draw do
     registrations: 'users/registrations' # 但客制化devise，跟routes說 註冊相關功能的部分 要特別使用哪個controller
   }
 
-  resources :stories # 做一個 文章們（符號） 相關的資源 出來 ＃複數 :複數 #複數resources長8條路徑對照7個方法 ＃單數resource的話會長7條路徑對照7個方法 不長有關id的路徑
+  # resources :stories # 做一個 文章們（符號） 相關的資源 出來 ＃複數 :複數 #複數resources長8條路徑對照7個方法 ＃單數resource的話會長7條路徑對照7個方法 不長有關id的路徑
+
+  resources :stories do 
+    resources :comments, only: [:create] # 每篇文章下會有很多留言，直接把留言路徑資源做在文章下
+    # 只會用到create action的相關路徑（只需要新增留言）
+    # rails routes | grep comments
+    # 只長出  story_comments    POST   /stories/:story_id/comments(.:format)     comments#create
+  end
 
   # 某一使用者 的 某一篇文章 頁面路徑
   # /@使用者名稱/文章標題-123

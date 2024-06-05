@@ -26,6 +26,8 @@ class Story < ApplicationRecord
   # 後端驗證，進資料庫前的驗證  
   has_one_attached :cover_image
   # 請rails active storage 幫每篇文章弄一個封面照功能
+  has_many :comments
+  # 動態長出四方法：comments comments= build create
 
   # Scopes
   # default_scope { where(deleted_at: nil) } # 使用paranoia套件就不用這行了

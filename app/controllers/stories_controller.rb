@@ -1,6 +1,10 @@
 class StoriesController < ApplicationController
     # 權限控管，做本controller的任何動作前，檢查是否為登入狀態，把沒有登入的人踢到登入頁面
     before_action :authenticate_user!
+    # devise送的方法
+    # Devise will create some helpers to use inside your controllers and views. To set up a controller with user authentication, just add this before_action (assuming your devise model is 'User'):
+    # before_action :authenticate_user!
+
     before_action :find_story, only: [:edit, :update, :destroy]
 
     def index # 文章列表頁面 的 action
