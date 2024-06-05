@@ -1,11 +1,17 @@
 class StoriesController < ApplicationController
     # 權限控管，做本controller的任何動作前，檢查是否為登入狀態，把沒有登入的人踢到登入頁面
-    before_action :authenticate_user!
+    before_action :authenticate_user!, except: [:clap]
+    # except: [:clap] 未登入者點擊拍手按鈕時，不會直接被踢到登入頁面
     # devise送的方法
     # Devise will create some helpers to use inside your controllers and views. To set up a controller with user authentication, just add this before_action (assuming your devise model is 'User'):
     # before_action :authenticate_user!
 
     before_action :find_story, only: [:edit, :update, :destroy]
+
+    skip_before_action :verify_authenticity_token, only: [:clap]
+    # 表單使用POST方法傳送時，預設會檢查token，沒有token會被檔下來
+    # 點擊拍手按鈕，表單打過來時，不檢查token（因為是透過一般API過來）
+    # 安全性？至少有檢查有無登入
 
     def index # 文章列表頁面 的 action
         # 沒有特別聲明的話，就會去views找同名html檔案（stories資料夾下的index.html.erb）
@@ -129,6 +135,22 @@ class StoriesController < ApplicationController
         # 刪資料
         # 跳提示
         # 重新導向頁面
+    end
+
+    def clap # 按下拍手按鈕 的 action（按下拍手按鈕後 API 傳資料給 frontend/controllers/story_controller.js）
+        # clap_story POST   /stories/:id/clap(.:format)      stories#clap
+        if user_signed_in? # 有登入的話
+            story = Story.friendly.find(params[:id])# 先把要被拍手的故事抓出來
+            # params[:id]抓出打過來網址的id
+            story.increment!(:clap)
+            # 對story物件（根據網址id被抓出來的 要被拍手的文章） 之 clap欄位 值 進行+1 的 動作
+            # t.integer "clap", default: 
+            # !表示不需要再兩階段地再使用.save方法（Rails慣例中 方法名稱帶驚嘆號的 表示會直接更動資料）
+            render json: {status: story.clap}
+            # 回傳 story物件（根據網址id被抓出來的 要被拍手的文章） 之 clap欄位 值（用json格式回傳給 打資料給此API 的檔案）
+        else # 沒登入的話
+            render json: {status: 'sign_in_first'} # 收到這個狀態 我們再根據狀態（透過在story_controller.js寫流程控制）在畫面上alert出來
+        end
     end
 
     private # 作用範圍是 以下 直到 本class的end為止，所以要寫在最後

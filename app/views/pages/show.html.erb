@@ -24,11 +24,11 @@
       <%= simple_format(@story.content) %>
       <!-- simple_format是rails的一個helper，可以辨別顯示的內容中的html標籤語法，且會正確呈現換行 -->
 
-      <footer data-controller='story'>
+      <footer data-controller='story'> <!-- 將此footer區塊交給stroy_controller.js負責 -->
       <!-- stimulus.js寫法 --> <!-- story controller -->
       <!-- data-controller 設定此區域 要去 哪個控制器 找指令 -->
         <%= link_to '#', class: 'clapButton is-size-4 has-text-primary',data: { action: 'story#addClap', slug: @story.slug } do %>
-        <!-- 按下此按鈕，就會執行story controller（frontend > controllers）的addClap action -->
+        <!-- 按下此按鈕，就會執行story_controller.js（frontend > controllers）的addClap action（函式） -->
         <!-- @story.slug是文章上那一串網址，而且因為是uniq唯一，所以可以用來辨別是 為哪一篇文章拍手 -->
         <!-- <a class="clapButton is-size-4 has-text-primary" data-action="story#addClap" data-slug="文章名稱" href="#"> -->
         <!-- <button data-action="click->story#addClap"></button> -->
@@ -36,9 +36,9 @@
         <!-- data-aciton 按鈕被按後要觸發的事件 -->
 
           <i class="fa-solid fa-hands-clapping"></i>
-          <span class="clapCount" data-target="story.clapCount">0</span>
+          <span class="clapCount" data-target="story.clapCount"><%= @story.clap %></span>
           <!-- story.clapCount表示是在data-controller='story'的元件 -->
-          <!-- data-target 要被抓到操控的 目標 -->
+          <!-- data-target 要被抓到並操控的 目標 -->
         <% end %>
       </footer>
     </article>
