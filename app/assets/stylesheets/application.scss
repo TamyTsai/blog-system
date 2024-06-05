@@ -17,6 +17,7 @@
  * 要去app > javascript（安裝webpacker後長出來的，可以去yml檔裡改名字，現在改為frontend目錄）> packs > application.js中引入才有效 
 
  *= require bulma/bulma.css
+ *= require @fortawesome/fontawesome-free/css/all.min.css
  *= require stories
  *= require_self
  */

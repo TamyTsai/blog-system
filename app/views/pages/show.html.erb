@@ -25,7 +25,10 @@
       <!-- simple_format是rails的一個helper，可以辨別顯示的內容中的html標籤語法，且會正確呈現換行 -->
 
       <footer>
-        拍手 0
+        <%= link_to '#', class: 'clapButton is-size-4 has-text-primary' do %>
+          <i class="fa-solid fa-hands-clapping"></i>
+          <span class="clapCount"> 0 </span>
+        <% end %>
       </footer>
     </article>
     <hr>
