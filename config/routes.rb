@@ -8,7 +8,15 @@ Rails.application.routes.draw do
 
   # resources :stories # 做一個 文章們（符號） 相關的資源 出來 ＃複數 :複數 #複數resources長8條路徑對照7個方法 ＃單數resource的話會長7條路徑對照7個方法 不長有關id的路徑
 
-  resources :stories do 
+  resources :stories do
+    member do
+      post :clap
+      # html動詞 :action
+    end
+    # 幫原本的8條路徑再擴充其他路徑（帶id）
+    # clap_story    POST   /stories/:id/clap(.:format)      stories#clap
+    # post比較不容易被仿造（會檢查token） get只要知道路徑 就可以灌票
+
     resources :comments, only: [:create] # 每篇文章下會有很多留言，直接把留言路徑資源做在文章下
     # 只會用到create action的相關路徑（只需要新增留言）
     # rails routes | grep comments
