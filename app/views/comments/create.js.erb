@@ -1,0 +1,20 @@
+var list = document.querySelector('section.comment-list')
+// 抓到html中 標籤為section 類別為comment-list的元素
+// <section class='comment-list'>
+// 整個留言清單區塊（留言輸入框下面的區塊）
+
+// 留言輸入框的內容
+var renderContent = "<%= j(render 'pages/comment', comment: @comment) %>"
+// j是一個 view helper，可以把ruby語法轉換為js語法
+// 渲染 pages目錄下的comment檔案（_comment.html.erb 局部渲染檔案）
+// 因為只要render一小塊，所以就不用寫collection
+// @comment 來自於 comments_controller.rb
+// @comment = @story.comments.new(comment_params)
+
+// 把 留言輸入框的內容（rederContent）塞到 留言清單區塊（list）
+list.innerHTML = renderContent + list.innerHTML
+// 把原本在section.comment-list抓到的內容（整個留言清單區塊（舊留言）） 加上 renderContent（新留言） 再塞回給section.comment-list
+
+document.querySelector('form.comment_form').reset()
+// 抓到html中 標籤為form 類別為comment_form的元素
+// 讓表單點擊送出後，輸入框可以被重置（清除原先輸入的內容）

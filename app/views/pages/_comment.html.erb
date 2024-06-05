@@ -4,7 +4,7 @@
     <span class="username"><%= comment.user.username %></span>
     </span>
     <%= simple_format(comment.content) %>
-    <!-- simple_format可以正確顯示換行 空格 -->
+    <!-- simple_format可以正確顯示換行 空格 並 正確轉換html標籤 -->
 </article>
 
 <!-- comment區域變數是從要做局部選染的檔案中 collection: @comments來的 -->

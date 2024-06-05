@@ -14,7 +14,7 @@
         <!-- 預設為remote: true，所以可以省略不打，表示送表單時使用AJAX方法，在背景送資料 -->
         <!-- 使用AJAX，Web 應用程式可以在背景中傳送和接收資料，以便根據需要僅重新整理頁面的一小部分 -->
         <!-- 不要在view中新增model，產生物件交給controller來做 -->
-        <%= form_with model: comment, url: story_comments_path(story), remote: true do |form|%>
+        <%= form_with model: comment, url: story_comments_path(story), class: 'comment_form', remote: true do |form|%>
             <%= form.text_area :content, rows: 5, class: 'textarea is-small' %> 
             <%= form.button '送出', class: 'button is-primary is-fullwidth' %>
             <!-- form_for 按鈕是submit -->
