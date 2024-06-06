@@ -6,8 +6,17 @@ Rails.application.routes.draw do
     registrations: 'users/registrations' # 但客制化devise，跟routes說 註冊相關功能的部分 要特別使用哪個controller
   }
 
-  # resources :stories # 做一個 文章們（符號） 相關的資源 出來 ＃複數 :複數 #複數resources長8條路徑對照7個方法 ＃單數resource的話會長7條路徑對照7個方法 不長有關id的路徑
+  resources :users, only:[] do
+    member do 
+      post :follow
+    end
+  end
+  # follow_user    POST   /users/:id/follow(.:format)     users#follow
+  # 因users的CRUD devise已經幫我們做好，故 only:[] 接空陣列 表示 與users有關的8條路徑7個方法都不要做
+  # 我們只需要/users/:id/follow路徑
+  # 要被follow功能api打的路徑
 
+  # resources :stories # 做一個 文章們（符號） 相關的資源 出來 ＃複數 :複數 #複數resources長8條路徑對照7個方法 ＃單數resource的話會長7條路徑對照7個方法 不長有關id的路徑
   resources :stories do
     member do
       post :clap
@@ -16,6 +25,7 @@ Rails.application.routes.draw do
     # 幫原本的8條路徑再擴充其他路徑（帶id）
     # clap_story    POST   /stories/:id/clap(.:format)      stories#clap
     # post比較不容易被仿造（會檢查token） get只要知道路徑 就可以灌票
+    # 要被拍手功能api打的路徑
 
     resources :comments, only: [:create] # 每篇文章下會有很多留言，直接把留言路徑資源做在文章下
     # 只會用到create action的相關路徑（只需要新增留言）

@@ -2,7 +2,7 @@
   <section class="column is-offset-3 is-6"> <!-- 本column為columns六格中的第三格（左到右） -->
     <h1 class="title"><%= @story.title %></h1>
 
-    <span class="profile">
+    <span class="profile" data-controller='user'>
       <!-- 文章作者大頭照 -->
       <!-- <img src="https://fakeimg.pl/50x50/" class="avatar">  -->
       <%= image_tag @story.user.avatar.variant(resize: "50x50"), class: 'avatar' if @story.user.avatar.attached? %>
@@ -12,7 +12,12 @@
       <!-- 文章作者使用者名稱 -->
       <span class="username"><%= @story.user.username %></span>
 
-      <a href="#" class="follow-button">追蹤</a>
+      <%= link_to "追蹤", '#', class: 'follow-button',
+                                 data: { action: 'user#follow', 
+                                 user: @story.user.id, 
+                                 target: 'user.followButton' } %>
+      <!-- date-user = @story.user.id  要去找要follow哪位使用者-->
+      <!-- <a href="#" class="follow-button">追蹤</a> -->
     </span>
 
     <article class="content">
@@ -34,6 +39,7 @@
         <!-- <button data-action="click->story#addClap"></button> -->
         <!-- 預設為click 所以可省略 -->
         <!-- data-aciton 按鈕被按後要觸發的事件 -->
+        <!-- '#'路徑為空 因為要往AJAX打 所以不用填 -->
 
           <i class="fa-solid fa-hands-clapping"></i>
           <span class="clapCount" data-target="story.clapCount"><%= @story.clap %></span>
