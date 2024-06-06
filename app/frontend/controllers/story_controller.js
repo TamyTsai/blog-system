@@ -25,7 +25,7 @@ export default class extends Controller {
     // 使用PSOT方法 透過axios套件 往 此連結打 API（controller.rb clap方法）
     // 打過去會有回應（json格式），接著根據回應處理後續動作（拍手功能用正統AJAX寫，留言功能收到的回應則是js，收到後執行該js）
     // API由後端工程師來寫
-    axios.post(`/stories/${slug}/clap`) // ES6變數串接字串的寫法 // 要去routes設定路徑
+    axios.post(`/api/stories/${slug}/clap`) // ES6變數串接字串的寫法 // 要去routes設定路徑
         .then(function(response) {
             let status = response.data.status
             // 抓到controller.rb中 clap aciton回傳的status資料（response.data.status） 指定給 變數status

@@ -24,7 +24,7 @@ export default class extends Controller {
     // 將 要被操控的目標（追蹤按鈕）指定給 變數button
 
     // 要用rails g controller users建立users控制器（原本的users控制器是跟devise有關的 跟這個不一樣）
-    axios.post(`/users/${user}/follow`)
+    axios.post(`/api/users/${user}/follow`)
          .then(function(response) {
             let status = response.data.status
             // 抓到controller.rb中 follow aciton回傳的status資料（response.data.status） 指定給 變數status
