@@ -77,6 +77,9 @@ group :development do
   # webpacker: bin/webpack-dev-server：幫你開啟webpack伺服器
   # $ foreman start 後 就會開始跑Procfile中寫的指令
   gem 'foreman', '~> 0.88.1'
+  # hirb讓rails中控台排版好看
+  # hirb-unicode 比較能 處理 非英文字
+  gem 'hirb-unicode', '~> 0.0.5'
 end
 
 group :test do

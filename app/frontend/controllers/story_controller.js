@@ -22,22 +22,22 @@ export default class extends Controller {
     
     // 資料往此路徑打：/stories/:id/clap(.:format)
     // 打api需要函式庫：axios
-    // 使用PSOT方法 透過axios套件 往 此連結打 API（stories_controller.rb clap方法）
+    // 使用PSOT方法 透過axios套件 往 此連結打 API（controller.rb clap方法）
     // 打過去會有回應（json格式），接著根據回應處理後續動作（拍手功能用正統AJAX寫，留言功能收到的回應則是js，收到後執行該js）
     // API由後端工程師來寫
     axios.post(`/stories/${slug}/clap`) // ES6變數串接字串的寫法 // 要去routes設定路徑
         .then(function(response) {
             let status = response.data.status
-            // 抓到stories_controller.rb中 clap aciton回傳的status資料（response.data.status） 指定給 變數status
+            // 抓到controller.rb中 clap aciton回傳的status資料（response.data.status） 指定給 變數status
             // ES6變數寫法
             switch (status){
-                case 'sign_in_first': // status 若等於 sign_in_first （表示使用者未登入（此檢查是否登入之 流程控制是在stories_controller.rb做的））
+                case 'sign_in_first': // status 若等於 sign_in_first （表示使用者未登入（此檢查是否登入之 流程控制是在controller.rb做的））
                     alert('你必須先登入')
                     break;
                 default: // status 若非 sign_in_first （表示使用者有登入）
                     target.innerHTML = status
                     // 改變 畫面上拍手數字 的 內容
-                    // stories_controller.rb：  render json: {status: story.clap}
+                    // controller.rb：  render json: {status: story.clap}
                     // 會直接抓到 story.clap（story物件（根據網址id被抓出來的 要被拍手的文章） 之 clap欄位 值）
             }
         })
@@ -47,7 +47,7 @@ export default class extends Controller {
     // 如果成功抓到資料，就執行.then後面接的函數
     // 如果失敗，就執行.catch後面接的函數
 
-    // stories_controller.rb
+    // controller.rb
     // def clap # 按下拍手按鈕 的 action
     //     render json: {status: 'ok'}  ->會傳到 response或error參數 中
     // end

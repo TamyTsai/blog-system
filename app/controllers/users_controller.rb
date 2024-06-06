@@ -11,8 +11,9 @@ class UsersController < ApplicationController
 
     def follow
         if user_signed_in? # 有登入的話
-            
-            render json: {status: 'ok'}
+            render json: {status: current_user.follow!(@user)}
+            # follow!為寫在user model的實體方法，用 User類別 建立出的 實體物件 都可以使用
+            # current_user.follow!(@user) 會回傳 unFollow或Followed
 
             # story = Story.friendly.find(params[:id])# 先把要被拍手的故事抓出來
             # # params[:id]抓出打過來網址的id
@@ -29,7 +30,7 @@ class UsersController < ApplicationController
 
     private
 
-    def find_user
+    def find_user # 找出 要被追蹤的 使用者
         @user = User.find(params[:id])
     end
 

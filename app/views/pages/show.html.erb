@@ -12,12 +12,17 @@
       <!-- 文章作者使用者名稱 -->
       <span class="username"><%= @story.user.username %></span>
 
-      <%= link_to "追蹤", '#', class: 'follow-button',
-                                 data: { action: 'user#follow', 
-                                 user: @story.user.id, 
-                                 target: 'user.followButton' } %>
+      <%= link_to '#', class: 'follow-button',
+                       data: { action: 'user#follow', 
+                       user: @story.user.id, 
+                       target: 'user.followButton' } do %>
       <!-- date-user = @story.user.id  要去找要follow哪位使用者-->
       <!-- <a href="#" class="follow-button">追蹤</a> -->
+
+        <%=  (user_signed_in? && current_user.follow?(@story.user))? '追蹤中' : '追蹤' %>
+        <!-- 如果 使用者有登入，且 已經追蹤 此篇文章的 作者使用者，追蹤按鈕就顯示「追蹤中」，沒登入或沒追蹤的話，就顯示「追蹤」 -->
+        <!-- 流程控制 的 三元運算子 寫法 -->
+      <% end %>
     </span>
 
     <article class="content">
