@@ -12,4 +12,9 @@ class Api::StoriesController < Api::BaseController
         # 回傳 story物件（根據網址id被抓出來的 要被拍手的文章） 之 clap欄位 值（用json格式回傳給 打資料給此API 的檔案）
     end
 
+    def bookmark # 按下 文章蒐藏按鈕 的 action（按下 文章蒐藏按鈕後 controller.js會往這個後端路徑打，就會使用bookmark action）
+        # bookmark_api_story   POST   /api/stories/:id/bookmark(.:format)       api/stories#bookmark
+        render json: {status: 'good'}
+    end
+
 end

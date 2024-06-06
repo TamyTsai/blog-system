@@ -23,11 +23,12 @@ Rails.application.routes.draw do
       # 要被follow功能api打的路徑
       # 加上namespace api後
       # follow_api_user   POST   /api/users/:id/follow(.:format)    api/users#follow
-
+      
       resources :stories, only:[] do
         member do
           post :clap
           # html動詞 :action
+          post :bookmark
         end
         # 幫原本的8條路徑再擴充其他路徑（帶id）
         # clap_story    POST   /stories/:id/clap(.:format)      stories#clap
@@ -35,6 +36,7 @@ Rails.application.routes.draw do
         # 要被拍手功能api打的路徑
         # 加上namespace api後
         # clap_api_story   POST   /api/stories/:id/clap(.:format)     api/stories#clap
+        # bookmark_api_story   POST   /api/stories/:id/bookmark(.:format)       api/stories#bookmark
       end
     # end
   

@@ -12,6 +12,7 @@
       <!-- 文章作者使用者名稱 -->
       <span class="username"><%= @story.user.username %></span>
 
+      <!-- 追蹤按鈕 -->
       <%= link_to '#', class: 'follow-button',
                        data: { action: 'user#follow', 
                        user: @story.user.id, 
@@ -23,6 +24,13 @@
         <!-- 如果 使用者有登入，且 已經追蹤 此篇文章的 作者使用者，追蹤按鈕就顯示「追蹤中」，沒登入或沒追蹤的話，就顯示「追蹤」 -->
         <!-- 流程控制 的 三元運算子 寫法 -->
       <% end %>
+
+      <!-- 書籤收藏按鈕 -->
+      <%= link_to '#', class: 'bookmark-button', data: { action: 'user#bookmark', slug: @story.slug } do %>
+        <i class="fa-regular fa-bookmark" data-target="user.bookmark"></i>
+        <!-- data-target為 觸發data-action成功後 要操控的對象 -->
+      <% end %>
+
     </span>
 
     <article class="content">

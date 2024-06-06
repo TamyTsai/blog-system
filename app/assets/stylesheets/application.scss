@@ -11,7 +11,7 @@
  * It is generally better to create a new file per style scope.
  *
 
- * 刪除原本vendor下的bulma.css（由於webpacker現已停用，所以本專案實際上還是使用專案原本的編譯方式（不刪vendor下的bulma.css，原本stylesheets目錄下的檔案也都保留），而不用webpacker幫忙打包）
+ * 刪除原本vendor下的bulma.css（由於webpacker現已停用，所以本專案實際上還是使用專案原本的編譯方式（Assets Pipeline）（被 Sprockets 來打包）（不刪vendor下的bulma.css，原本stylesheets目錄下的檔案也都保留），而不用webpacker幫忙打包）
  * 改把bulma放到webpacker相關目錄，讓這個套件可以被webpacker做打包：
  * $ yarn add bulma （會把bulma加到 node_modules目錄中）
  * 要去app > javascript（安裝webpacker後長出來的，可以去yml檔裡改名字，現在改為frontend目錄）> packs > application.js中引入才有效 
