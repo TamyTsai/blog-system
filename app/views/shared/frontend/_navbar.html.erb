@@ -45,6 +45,8 @@
                   <%= link_to '文章列表', stories_path, class: 'navbar-item' %>
                   <!--  stories  GET   /stories(.:format)   stories#index -->
                   <hr class="navbar-divider">  
+                  <%= link_to '會員升級', pricing_users_path, class: 'navbar-item' unless current_user.paid_user? %>
+                  <!-- 如果 目前登入的使用者 不是 付費會員的話（使用.paid_user?回傳了false），才顯示這個選項-->
                   <%= link_to '編輯個人資料', edit_user_registration_path, class: 'navbar-item' %>
                   <hr class="navbar-divider">  
                   <%= link_to '登出', destroy_user_session_path, class: 'navbar-item', method: 'delete', data: {confirm: "是否確定登出?"}  %>

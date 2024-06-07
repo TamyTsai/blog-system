@@ -4,6 +4,42 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  enum role: {
+    user: 0, # 一般會員
+    vip_user: 1, # vip會員
+    platinum_user: 2, # 白金會員
+    admin: 3 # 管理者
+  }
+  # enum 欄位名稱: 後面接一個雜湊hash
+  # hash裡面寫上 欄位中每個數字對應的意思
+  # 該欄位的資料型態為整數，透過此設定，會多很多功能（改變在資料表上該欄位值的顯示方式、多問號方法）
+
+  # 中控台（會員角色）
+    # 2.7.8 :003 > Hirb.enable
+    #  => true 
+    #  2.7.8 :004 > User.first
+    #    User Load (1.8ms)  SELECT "users".* FROM "users" ORDER BY "users"."id" ASC LIMIT $1  [["LIMIT", 1]]
+    #  +----+--------------------+----------------------+----------------------+-----------------------+---------------------+----------------------+------------------------+----------+----------------------+------+
+    #  | id | email              | encrypted_password   | reset_password_token | reset_password_sen... | remember_created_at | created_at           | updated_at             | username | intro                | role |
+    #  +----+--------------------+----------------------+----------------------+-----------------------+---------------------+----------------------+------------------------+----------+----------------------+------+
+    #  | 1  | tamy8677@gmail.com | $2a$12$nOGDwTN7gy... |                      |                       |                     | 2024-05-31 16:08:... | 2024-06-04 13:08:32... | tsai     | 學習開發程式中\r\...   | user |
+    #  +----+--------------------+----------------------+----------------------+-----------------------+---------------------+----------------------+------------------------+----------+----------------------+------+
+    #  1 row in set
+    # 可以看見role預設值為0，但透過enum的設定後，在資料表直接顯示為user
+
+    # 2.7.8 :005 > User.first.admin?
+    # User Load (1.0ms)  SELECT "users".* FROM "users" ORDER BY "users"."id" ASC LIMIT $1  [["LIMIT", 1]]
+    # => false 
+    # 2.7.8 :006 > User.first.vip_user?
+    #   User Load (0.9ms)  SELECT "users".* FROM "users" ORDER BY "users"."id" ASC LIMIT $1  [["LIMIT", 1]]
+    #  => false 
+    # 2.7.8 :007 > User.first.platinum_user?
+    #   User Load (0.9ms)  SELECT "users".* FROM "users" ORDER BY "users"."id" ASC LIMIT $1  [["LIMIT", 1]]
+    #  => false 
+    # 2.7.8 :008 > User.first.user?
+    #   User Load (1.0ms)  SELECT "users".* FROM "users" ORDER BY "users"."id" ASC LIMIT $1  [["LIMIT", 1]]
+    #  => true 
+
   # 驗證validations
   validates :username, presence: true, uniqueness: true
   # 後端驗證
@@ -117,6 +153,10 @@ class User < ApplicationRecord
     #   Bookmark Exists? (0.9ms)  SELECT 1 AS one FROM "bookmarks" WHERE "bookmarks"."user_id" = $1 AND "bookmarks"."story_id" = $2 LIMIT $3  [["user_id", 1], ["story_id", 1], ["LIMIT", 1]]
     # => true （有）
 
-
+  def paid_user? # 回傳是否為付費使用者（vip與白金會員有付費，user和管理者沒有）
+    vip_user? or platinum_user?
+    # 省略return的寫法 自動回傳最後一行
+    # 只要其中一個回true，此方法就會回傳true
+  end
 
 end

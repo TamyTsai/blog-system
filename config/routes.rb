@@ -41,12 +41,22 @@ Rails.application.routes.draw do
       end
 
       post :upload_image, to: 'utils#upload_image'
-      # 在name space api底下 擴充 upload_image路徑（不帶id），並指定 此路徑 對應 utils controller 與 upload_image action
+      # 在name space api底下 擴充 upload_image路徑（不帶id），並指定 此路徑 對應 utils controller 的 upload_image action
       # api_upload_image   POST   /api/upload_image(.:format)      api/utils#upload_image
     # end
   
   end
   
+  resources :users, only: [] do
+    # 不做8條路徑 7個action
+    collection do
+      get :pricing # 點擊導覽列之 會員升級後 用get方法 到price action（在users controller裡）
+      get :payment # 在會員升級頁面 點擊購買 所導向的頁面 （用get方法 到payment action（在users controller裡））
+    end
+    # 幫原本的路徑擴充其他路徑（不帶id）
+    # pricing_users    GET    /users/pricing(.:format)       users#pricing
+    # payment_users    GET    /users/payment(.:format)       users#payment
+  end
 
   # resources :stories # 做一個 文章們（符號） 相關的資源 出來 ＃複數 :複數 #複數resources長8條路徑對照7個方法 ＃單數resource的話會長7條路徑對照7個方法 不長有關id的路徑
   resources :stories do
