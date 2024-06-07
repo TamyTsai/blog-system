@@ -28,6 +28,9 @@ class Story < ApplicationRecord
   # 請rails active storage 幫每篇文章弄一個封面照功能
   has_many :comments
   # 動態長出四方法：comments comments= build create
+  has_many :bookmarks
+  # 一篇文章 可被 多次收藏
+  # 如果有需要在後台查詢文章被收藏的數量 的話再開（關聯有需要再建）
 
   # Scopes
   # default_scope { where(deleted_at: nil) } # 使用paranoia套件就不用這行了

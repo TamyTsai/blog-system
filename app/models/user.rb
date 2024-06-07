@@ -21,6 +21,8 @@ class User < ApplicationRecord
   # 但User與Story要has_one或has_many comments 就要自己手動設定
   has_many :follows
   # 一個使用者 可有 多個追蹤者
+  has_many :bookmarks
+  # 一個使用者 可收藏 多篇文章
   has_one_attached :avatar
   # 請rails active storage 幫每個使用者弄一個大頭貼功能
 
@@ -47,7 +49,7 @@ class User < ApplicationRecord
     end
   end
 
-  # 中控台
+  # 中控台（follow）
     # 2.7.8 :002 > Hirb.enable
     # => true 
     
@@ -77,5 +79,44 @@ class User < ApplicationRecord
     #   User Load (0.5ms)  SELECT "users".* FROM "users" ORDER BY "users"."id" DESC LIMIT $1  [["LIMIT", 1]]
     #   Follow Exists? (0.7ms)  SELECT 1 AS one FROM "follows" WHERE "follows"."user_id" = $1 AND "follows"."following_id" = $2 LIMIT $3  [["user_id", 1], ["following_id", 2], ["LIMIT", 1]]
     # => true （有）
+
+  
+  def bookmark?(story)
+    bookmarks.exists?(story: story) # 回傳 使用者 是否有 收藏此文章（參數傳進來的文章）
+  end
+
+  def bookmark!(story)
+    if bookmark?(story) # 使用者 已經收藏 該篇文章（story）了
+      bookmarks.find_by(story: story).destroy
+      # 去bookmarks表格，找出story（被收藏的文章）欄位為 參數傳進來的文章 的資料，然後刪除該資料
+      return '未收藏'
+    else # 使用者 尚未收藏 該篇文章（story）
+      bookmarks.create(story: story)
+      # 去bookmarks表格 的 story（被收藏文章）欄位，新增值：story（傳進來的文章）
+      # create會直接把資料寫進資料庫（不像new還要再save）
+      return '已收藏'
+    end
+  end
+  # 中控台（bookmark）
+    # 2.7.8 :001 >  User.first.bookmark?(Story.first) （第一個使用者 有收藏 第一篇文章嗎？）
+    #   User Load (0.7ms)  SELECT "users".* FROM "users" ORDER BY "users"."id" ASC LIMIT $1  [["LIMIT", 1]]
+    #   Story Load (0.7ms)  SELECT "stories".* FROM "stories" WHERE "stories"."deleted_at" IS NULL ORDER BY "stories"."id" ASC LIMIT $1  [["LIMIT", 1]]
+    #   Bookmark Exists? (1.2ms)  SELECT 1 AS one FROM "bookmarks" WHERE "bookmarks"."user_id" = $1 AND "bookmarks"."story_id" = $2 LIMIT $3  [["user_id", 1], ["story_id", 1], ["LIMIT", 1]]
+    # => false （沒有）
+    # 2.7.8 :002 > User.first.bookmark!(Story.first) （第一個使用者 收藏 第一篇文章（如果原本未收藏的話））
+    #   User Load (1.4ms)  SELECT "users".* FROM "users" ORDER BY "users"."id" ASC LIMIT $1  [["LIMIT", 1]]
+    #   Story Load (0.4ms)  SELECT "stories".* FROM "stories" WHERE "stories"."deleted_at" IS NULL ORDER BY "stories"."id" ASC LIMIT $1  [["LIMIT", 1]]
+    #   Bookmark Exists? (0.7ms)  SELECT 1 AS one FROM "bookmarks" WHERE "bookmarks"."user_id" = $1 AND "bookmarks"."story_id" = $2 LIMIT $3  [["user_id", 1], ["story_id", 1], ["LIMIT", 1]]
+    #   TRANSACTION (0.2ms)  BEGIN
+    #   Bookmark Create (9.2ms)  INSERT INTO "bookmarks" ("user_id", "story_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["user_id", 1], ["story_id", 1], ["created_at", "2024-06-07 01:30:21.955107"], ["updated_at", "2024-06-07 01:30:21.955107"]]
+    #   TRANSACTION (0.6ms)  COMMIT
+    # => "已收藏" 
+    # 2.7.8 :003 > User.first.bookmark?(Story.first)（第一個使用者 有收藏 第一篇文章嗎？）
+    #   User Load (1.0ms)  SELECT "users".* FROM "users" ORDER BY "users"."id" ASC LIMIT $1  [["LIMIT", 1]]
+    #   Story Load (0.4ms)  SELECT "stories".* FROM "stories" WHERE "stories"."deleted_at" IS NULL ORDER BY "stories"."id" ASC LIMIT $1  [["LIMIT", 1]]
+    #   Bookmark Exists? (0.9ms)  SELECT 1 AS one FROM "bookmarks" WHERE "bookmarks"."user_id" = $1 AND "bookmarks"."story_id" = $2 LIMIT $3  [["user_id", 1], ["story_id", 1], ["LIMIT", 1]]
+    # => true （有）
+
+
 
 end

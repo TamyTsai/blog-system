@@ -27,8 +27,14 @@
 
       <!-- 書籤收藏按鈕 -->
       <%= link_to '#', class: 'bookmark-button', data: { action: 'user#bookmark', slug: @story.slug } do %>
-        <i class="fa-regular fa-bookmark" data-target="user.bookmark"></i>
-        <!-- data-target為 觸發data-action成功後 要操控的對象 -->
+        <% if user_signed_in? && current_user.bookmark?(@story) %> <!-- 如果 使用者有登入，且 已經收藏 此篇文章 -->
+          <i class="fa-solid fa-bookmark" data-target="user.bookmark"></i>
+          <!-- 顯示實心書籤 -->
+          <!-- data-target為 觸發data-action成功後 要操控的對象 -->
+        <% else %> <!-- 如果 使用者沒登入，或 尚未收藏 此篇文章 -->
+          <i class="fa-regular fa-bookmark" data-target="user.bookmark"></i>
+          <!-- 顯示空心書籤 -->
+        <% end %>
       <% end %>
 
     </span>

@@ -58,25 +58,36 @@ export default class extends Controller {
 
     let link = event.currentTarget; // 把按下去的超連結抓出來
     let slug = link.dataset.slug; // 目前這個按鈕上的連結內容 的 文章標題 部分
+    let icon = this.bookmarkTarget // 書籤按鈕（要被改變樣式的對象）
 
     axios.post(`/api/stories/${slug}/bookmark`)
          .then(function(response) {
             let status = response.data.status
-            // 抓到controller.rb中 follow aciton回傳的status資料（response.data.status） 指定給 變數status
+            // 抓到controller.rb中 bookmark aciton回傳的status資料（response.data.status） 指定給 變數status
             switch (status) {
-                case 'sign_in_first': // status 若等於 sign_in_first （表示使用者未登入（此檢查是否登入之 流程控制是在controller.rb做的））
-                    alert('你必須先登入')
-                    break;
-                default: // status 若非 sign_in_first （表示使用者有登入）
-                    button.innerHTML = status
-                    // 改變 追蹤按鈕 的 內容（按鈕上面的字）
-                    // controller.rb：  render json: {status: current_user.follow!(@user)}
-                    // current_user.follow!(@user)會回傳「追蹤」（退追後 還沒追蹤）或「追蹤中」（開始追蹤）
-                  }
+                case '已收藏': // status 若等於 sign_in_first （表示使用者未登入（此檢查是否登入之 流程控制是在controller.rb做的））
+                  icon.classList.add('fa-solid')
+                  // .classList可抓出該html元素的類別 成為陣列
+                  // 加上實心類別
+                  icon.calssList.remove('fa-regular')
+                  // 移除空心類別
+                  break;
+                case '未收藏':
+                  icon.classList.add('fa-regular')
+                  // .classList可抓出該html元素的類別 成為陣列
+                  // 加上空心類別
+                  icon.calssList.remove('fa-solid')
+                  // 移除實心類別
+                  break;
+              }
             })
          .catch(function(error) {
               console.log(error)
             })
   }
+  // 對應的controller是stories_conroller.rb？
+  // bookmark會被歸類在user_contorller.js純粹是因為在view html中的地緣關係，因為bookmark在follow旁邊而已，所以在標籤上就共用一個data-controller，bookmark才會被歸類在user_contorller.js
+  // 但建立routes時（user_contorller.js前端 要打向 的後端api路徑）會考慮bookmark功能要收藏文章，為了辨別要收藏哪篇文章，網址上應該要有story的id，所以網址會設計成在sotry下有member
+  // 但如此一來，routes建出來後，就自然會到stories_conroller.rb下找action
 
 }
