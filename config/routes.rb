@@ -23,6 +23,7 @@ Rails.application.routes.draw do
       # 要被follow功能api打的路徑
       # 加上namespace api後
       # follow_api_user   POST   /api/users/:id/follow(.:format)    api/users#follow
+
       
       resources :stories, only:[] do
         member do
@@ -38,6 +39,10 @@ Rails.application.routes.draw do
         # clap_api_story   POST   /api/stories/:id/clap(.:format)     api/stories#clap
         # bookmark_api_story   POST   /api/stories/:id/bookmark(.:format)       api/stories#bookmark
       end
+
+      post :upload_image, to: 'utils#upload_image'
+      # 在name space api底下 擴充 upload_image路徑（不帶id），並指定 此路徑 對應 utils controller 與 upload_image action
+      # api_upload_image   POST   /api/upload_image(.:format)      api/utils#upload_image
     # end
   
   end

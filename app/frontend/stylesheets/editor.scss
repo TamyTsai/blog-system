@@ -1,2 +1,10 @@
 @import 'froala-editor/css/froala_editor.mis.css';
 // @import '要引入的檔案路徑'
+
+// 引入FroalaEditor的 plugin外掛
+@import 'froala-editor/css/plugins/table.min.css'; // 表格
+@import 'froala-editor/css/plugins/colors.min.css'; // 顏色
+@import 'froala-editor/css/plugins/draggable.min.css'; // 拖曳
+@import 'froala-editor/css/plugins/fullscreen.min.css'; // 全螢幕編輯
+@import 'froala-editor/css/plugins/image.min.css'; // 圖片
+@import 'froala-editor/css/plugins/video.min.css'; // 影片

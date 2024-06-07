@@ -45,8 +45,10 @@
       <%= image_tag @story.cover_image.variant(resize: '1000x500'), class: 'cover-image' if @story.cover_image.attached? %>
 
       <!-- 文章內文 -->
-      <%= simple_format(@story.content) %>
-      <!-- simple_format是rails的一個helper，可以辨別顯示的內容中的html標籤語法，且會正確呈現換行 -->
+      <!-- simple_format(@story.content) -->
+      <!-- simple_format是rails的一個helper，可以辨別顯示的內容中的html標籤語法，且會正確呈現換行，還會清掉顏色設定，但這邊不想清掉 文章編輯頁面編輯器所給的文字顏色，所以改用.html_safe -->
+      <%= @story.content.html_safe %>
+      <!-- .html_safe就不會過濾 文字編輯器給文章文字 套用的css -->
 
       <footer data-controller='story'> <!-- 將此footer區塊交給stroy_controller.js負責 -->
       <!-- stimulus.js寫法 --> <!-- story controller -->
