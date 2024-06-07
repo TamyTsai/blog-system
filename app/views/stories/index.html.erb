@@ -14,7 +14,9 @@
             <!-- aasm寫法 用狀態機方法判斷是否為 發佈狀態 -->
             <!-- <span class="tag is-primary">已發佈</span> -->
         </h2>
-        <p><%= story.content %></p>
+        <p><%= strip_tags(story.content).truncate(200) %></p>
+        <!-- strip_tags 可以把html標籤撕掉 -->
+        <!-- trucncate(留下的字數)可以把文字截短 -->
         <p>
             最後編輯時間：<%= time_ago_in_words(story.updated_at) %>
             <!-- 會顯示世界標準時間格式 2024-06-01 12:23:03 UTC -->

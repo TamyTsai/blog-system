@@ -11,7 +11,7 @@
 
 <!-- form_for(MODEL) do |form|
 end -->
-<%= form_for(story) do |form| %> <!-- 還沒在controller建@story前，會出現錯誤：First argument in form cannot contain nil or be empty -->
+<%= form_for(story, html: {class: 'story-editor'}) do |form| %> <!-- 還沒在controller建@story前，會出現錯誤：First argument in form cannot contain nil or be empty -->
     
     <div class="field">
         <%= image_tag story.cover_image.variant(resize: '1000x800'), class: 'cover-image' if story.cover_image.attached? %>
@@ -38,7 +38,13 @@ end -->
         <!-- <textarea>標籤 為 多行輸入框，以rows=""及cols=""控制長寬 -->
     </div>
     <div class="field">
-        <%= form.submit '儲存草稿', name: 'save_as_draft', class: 'button is-medium' %>
+        <% if story.published? %> <!-- 如果文章是發佈狀態 -->
+            <%= form.submit '更新', name: 'save_as_draft', class: 'button is-medium' %>
+            <!-- 發佈狀態下的編輯文章 就不會有 儲存草稿 按鈕，畢竟已發佈的文章 狀態就不是草稿 -->
+        <% else %> <!-- 如果文章是草稿狀態 -->
+            <%= form.submit '儲存草稿', name: 'save_as_draft', class: 'button is-medium' %>
+        <% end %>
+        
         <%= form.submit '發佈文章', name: 'publish', class: 'button is-medium is-primary' if story.may_publish? %>
         <!-- 按下發佈文章按鈕後 會有publish key給controller用 -->
         <!-- 流程控制倒裝句，如果文章為可發佈（表示現為草稿狀態），才出現此按鈕 -->
@@ -47,3 +53,6 @@ end -->
         <!-- 流程控制倒裝句，如果文章為可下架（表示現為發佈狀態），才出現此按鈕 -->
     </div>
 <% end %> 
+
+<%= javascript_pack_tag 'editor' %>
+<!-- 去載入 pack資料夾中 的editor.js檔案（由Webpack編譯） -->

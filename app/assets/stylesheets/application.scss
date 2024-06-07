@@ -12,6 +12,9 @@
  *
 
  * 刪除原本vendor下的bulma.css（由於webpacker現已停用，所以本專案實際上還是使用專案原本的編譯方式（Assets Pipeline）（被 Sprockets 來打包）（不刪vendor下的bulma.css，原本stylesheets目錄下的檔案也都保留），而不用webpacker幫忙打包）
+ * 有別人做好的gem的話，就可以把gem放到Gemfile，然後bundle把東西安裝起來，但如果沒有別人做好的gem，就要改用 前端管理套件 來把東西加入專案（npm install、yarn add）
+ * Webpacker 使用了 yarn 來安裝相關的套件
+ * https://kaochenlong.com/2019/11/21/webpacker-with-rails-part-1/
  * 改把bulma放到webpacker相關目錄，讓這個套件可以被webpacker做打包：
  * $ yarn add bulma （會把bulma加到 node_modules目錄中）
  * 要去app > javascript（安裝webpacker後長出來的，可以去yml檔裡改名字，現在改為frontend目錄）> packs > application.js中引入才有效 
