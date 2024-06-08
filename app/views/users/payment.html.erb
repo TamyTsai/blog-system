@@ -14,38 +14,59 @@
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur sit amet massa fringilla egestas. Nullam condimentum luctus turpis.
           </p>
         </div>
+
+        <!-- 原有form_tag、form_for，Rails新增form_with寫法 -->
+        <!-- form_with model: 模型名稱.new（不一定真的要有一顆model，因為這裡只是要把東西送到某一個地方去接，所以沒用model的話，可省略不寫）, url: 表單要送往的路徑(要傳進去的參數（局部渲染檔案不建議使用實體變數，應用區域變數） do |form|) -->
+        <!-- 預設為remote: true，所以可以省略不打，表示送表單時使用AJAX方法，在背景送資料，但這裡不想這麼做，所以設定 local: true，表示希望用一般表單傳送方法，送出表單後就直接轉到下一頁，不需要僅在背景傳輸資料-->
+        <%= form_with url: pay_users_path(type: params[:type]), id: 'pay_form', method: 'post', local: true do |form|%>
+        <!-- (type: param[:type])：給路徑一個參數type，並將網址中的type抓下來傳入此參數 -->
+        <!-- <form id="pay_form" action="/users/pay?type=vip" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="0zULQnfGUs7W_VGKXeAuWArCXLM8dvr0PtXa7gsizjRbWi3o5y7AkHl1K7wGLjSt3URWT861X5DbtTdz0Kd4SQ" autocomplete="off" /> -->
+        <!-- 這個頁面就只是在刷卡付款，所以要被傳送資料的路徑沒有type參數 來讓 我們 指定 使用者購買的會員類型 的話，就不知道 使用者 是 買哪一種會員資格 -->
+          <%= form.hidden_field :payment_nonce %> <!-- 塞一個隱藏欄位 -->
+          <!-- <input autocomplete="off" type="hidden" name="payment_nonce" id="payment_nonce" /> -->
+          <div id="dropin-container"></div>
+          <%= link_to "重新選擇方案", pricing_users_path, class: 'button is-light' %>
+          <button id="submit-button" class="button is-danger">確認付款</button>
+        <% end %>
+
       </div>
     </article>
   </div>
   
 
-<div id="dropin-container"></div>
-<button id="submit-button">請求付款方法</button>
+
 
 <!-- Braintree -->
+<!-- Braintree的測試卡號：4111 1111 1111 1111 -->
+<!-- 到期日填一個 當下時間 尚未過期的時間 即可 -->
 <!-- Braintree流程：
   1. 客戶端 對我們的伺服器提出Token請求
   2. 我們的伺服器 給 客戶端 Token
-  3. 客戶端 拿著Token 向 Braintree伺服器 請求 一次性的Nonce封包 並取得 Nonce封包
+  3. 客戶端 拿著Token 向 Braintree伺服器 請求 一次性的Nonce（隨機數）封包 並取得 Nonce封包
   4. 客戶端 將 Nonce給我們的伺服器
   5. 我們的伺服器 將 Nonce 交給 Braintree伺服器-->
+<!-- 客戶拿我們給他的 token 給Braintree認證，並取得nonce，我們拿客戶給我們的 nonce 給Braintree認證 -->
+<!-- 透過Braintree提供的js 組合適當的token 畫出 付款資訊表單 -->
 <script src="https://js.braintreegateway.com/web/dropin/1.42.0/js/dropin.min.js"></script>
 <script>
-  document.addEventListener('DOMContentLoaded', function(event) { // 等元件載入後 再做初始化  // turbolinks:load
+  document.addEventListener('DOMContentLoaded', function(event) { // 等元件載入後 再做初始化  // turbolinks:load（但這裡沒效果 所以還是用DOMContentLoaded ） // 用一般監聽事件 DOMContentLoaded 的話，網頁需要重新整理一次 刷卡機才會跑出來
+    // Turbolinks 是一個 Javascript 程式，它的目地就是讓網頁切換時更快速，怎麼做到的？基本上就是把瀏覽器的跳轉切掉，交由 Turbolinks 來管，用 history API 來改變 URL，及 當網頁切換跳轉時，<body> 中的內容：用 XMLHttpRequest 取得後，Render 它；<head> 中的內容：只執行有新增的，其他的就保留，Rails 內定就是開啟 Turbolinks，除非你把它給關了
+
     var button = document.querySelector('#submit-button'); // 抓到按鈕
-    // let nonce_field = document.querySelector('input[name="payment_nonce"]')
-    // let form = document.querySelector('#pay_form')
+    let nonce_field = document.querySelector('input[name="payment_nonce"]') // 抓到輸入框name為payment_nonce的html元素
+    let form = document.querySelector('#pay_form') // 抓到id為pay_form的html元素（信用卡資訊表單）
 
     braintree.dropin.create({
-      authorization: '<%= @token %>', // 我們伺服器 給 客戶端 的 token
+      authorization: '<%= @token %>', // 我們伺服器 給 客戶端 的 token  // 2. 我們的伺服器 給 客戶端 Token
       container: '#dropin-container' // 會根據 script src 將 id為dropin-container 之 元素 變成一個刷卡機
     }, function (createErr, instance) {
-      button.addEventListener('click', function () {
-        // event.preventDefault()
+      button.addEventListener('click', function (event) { 
+        event.preventDefault() // 如果沒有先停下預設動作，就會在客戶向Braintree伺服器 要 nonce回來之前，頁面就送出去了
 
-        instance.requestPaymentMethod(function (err, payload) {
-          // nonce_field.value = payload.nonce
-          // form.submit()
+        instance.requestPaymentMethod(function (err, payload) { // 讓js向Braintree伺服器 要 nonce回來  // 3. 客戶端 拿著Token 向 Braintree伺服器 請求 一次性的Nonce（隨機數）封包 並取得 Nonce封包
+          nonce_field.value = payload.nonce // payload.nonce是 客戶端 向Braintree伺服器 拿回來的nonce  // 4. 客戶端 將 Nonce給我們的伺服器
+          // 把 客戶端 向Braintree伺服器 拿回來的nonce 指定給 隱藏欄位輸入框的值
+          form.submit() // 送出 信用卡資訊表單  // 5. 我們的伺服器 將 Nonce 交給 Braintree伺服器
         });
       });
     });

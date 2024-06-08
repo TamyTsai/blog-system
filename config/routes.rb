@@ -52,10 +52,12 @@ Rails.application.routes.draw do
     collection do
       get :pricing # 點擊導覽列之 會員升級後 用get方法 到pricing action（在users controller裡）
       get :payment # 在會員升級頁面 點擊購買 所導向的頁面 （用get方法 到payment action（在users controller裡））
+      post :pay # 按下 付款 所導向的頁面（不需要畫面 負責去跟braintree伺服器做溝通即可）（用post方法送出 使用者 在 付款頁面 所輸入的信用卡資訊）
     end
     # 幫原本的路徑擴充其他路徑（不帶id）
     # pricing_users    GET    /users/pricing(.:format)       users#pricing
     # payment_users    GET    /users/payment(.:format)       users#payment
+    # pay_users        POST   /users/pay(.:format)           users#pay
   end
 
   # resources :stories # 做一個 文章們（符號） 相關的資源 出來 ＃複數 :複數 #複數resources長8條路徑對照7個方法 ＃單數resource的話會長7條路徑對照7個方法 不長有關id的路徑

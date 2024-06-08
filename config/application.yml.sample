@@ -1,0 +1,13 @@
+# Add configuration values here, as shown below.
+# 不是 原本figaro產生的apllication.yml檔，所以會被git追蹤
+# 使用時 請把副檔名.sample拿掉，並在以下設定對應的值
+
+price_vip: '10'
+price_platinum: '20'
+# 設定之後 在controller或整個Rails網站裡面（全域環境變數），就可以透過 ENV['price_vip']拿到 price_vip在這裡對應設定的值
+# 這裡是設定檔，更動後要重啟伺服器才會生效
+
+# 註冊登入Braintree Sandbox，進入API頁面 可查詢
+braintree_merchant_id: 'Your Merchant ID'
+braintree_public_key: 'Your Private Key'
+braintree_private_key: 'Your Public Key'

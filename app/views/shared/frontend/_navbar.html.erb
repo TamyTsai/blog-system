@@ -32,6 +32,12 @@
             <!-- 顯示 目前使用者的email欄位內容 及 個人資料、登出按鈕、下拉選單 -->
               <div class="navbar-item has-dropdown is-hoverable">
                 <a class="navbar-link">
+                  <!-- 付費會員皇冠圖示 -->
+                  <%= content_tag :i, "", class: 'fa-solid fa-crown has-text-primary' if current_user.vip_user? %>
+                  <%= content_tag :i, "", class: 'fa-solid fa-crown has-text-danger' if current_user.platinum_user? %>
+                  <!-- content_tag :要產生的html標籤類型, "標籤中的內容" -->
+                  <!-- fontawesome使用i標籤 -->
+
                   <%= avatar(current_user, 50) %>
                   <!-- <img class="user-avatar" src="http://localhost:3000/rails/active_storage/...png" /> -->
                   <!-- 使用者頭貼 -->
