@@ -53,6 +53,16 @@ gem 'babosa', '~> 2.0'
 # paranoia軟刪除
 # 正常功能 並非開發或測試才會用到的功能
 gem 'paranoia', '~> 2.6', '>= 2.6.3'
+# figaro 把像是 會員升級頁面的價格 與 刷卡時的API key這些設定變成環境變數
+# 上線之後也會用到的功能
+gem 'figaro', '~> 1.2'
+# $ figaro install
+# create  config/application.yml # 創建 Figaro的設定檔
+# append  .gitignore # 將 Figaro的設定檔 加入 不會被git追蹤的資料夾
+
+# Braintree 金流串接
+gem "braintree", "~> 4.20.0"
+
 
 # 開發群組
 group :development, :test do

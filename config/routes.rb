@@ -50,7 +50,7 @@ Rails.application.routes.draw do
   resources :users, only: [] do
     # 不做8條路徑 7個action
     collection do
-      get :pricing # 點擊導覽列之 會員升級後 用get方法 到price action（在users controller裡）
+      get :pricing # 點擊導覽列之 會員升級後 用get方法 到pricing action（在users controller裡）
       get :payment # 在會員升級頁面 點擊購買 所導向的頁面 （用get方法 到payment action（在users controller裡））
     end
     # 幫原本的路徑擴充其他路徑（不帶id）

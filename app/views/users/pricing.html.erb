@@ -19,7 +19,8 @@
               </div>
               <div class="media-content">
                 <p class="title is-4">VIP 會員</p>
-                <p class="subtitle is-6">TWD 10</p>
+                <p class="subtitle is-6">TWD <%= ENV['price_vip'] %></p>
+                <!-- ENV['price_vip']為 全域的環境變數，其值於application.yml中設定，適用於整個專案 -->
               </div>
             </div>
             <div class="content">
@@ -42,14 +43,14 @@
           </div>
           <div class="card-content">
             <div class="media">
-              <div class="media-left">
+              <div class="media-left"> 
                 <figure class="image is-48x48">
                   <img src="https://fakeimg.pl/96x96/?text=CCH" alt="Placeholder image">
                 </figure>
               </div>
               <div class="media-content">
                 <p class="title is-4">白金會員</p>
-                <p class="subtitle is-6">TWD 20</p>
+                <p class="subtitle is-6">TWD <%= ENV['price_platinum'] %></p>
               </div>
             </div>
             <div class="content">

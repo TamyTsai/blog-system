@@ -9,7 +9,7 @@
       </div>
       <div class="media-content">
         <div class="content">
-          <strong></span>
+          <strong><%= @payment_type %> (TWD <%= @fee %>)</span>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur sit amet massa fringilla egestas. Nullam condimentum luctus turpis.
           </p>
@@ -17,3 +17,51 @@
       </div>
     </article>
   </div>
+  
+
+<div id="dropin-container"></div>
+<button id="submit-button">請求付款方法</button>
+
+<!-- Braintree -->
+<!-- Braintree流程：
+  1. 客戶端 對我們的伺服器提出Token請求
+  2. 我們的伺服器 給 客戶端 Token
+  3. 客戶端 拿著Token 向 Braintree伺服器 請求 一次性的Nonce封包 並取得 Nonce封包
+  4. 客戶端 將 Nonce給我們的伺服器
+  5. 我們的伺服器 將 Nonce 交給 Braintree伺服器-->
+<script src="https://js.braintreegateway.com/web/dropin/1.42.0/js/dropin.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function(event) { // 等元件載入後 再做初始化  // turbolinks:load
+    var button = document.querySelector('#submit-button'); // 抓到按鈕
+    // let nonce_field = document.querySelector('input[name="payment_nonce"]')
+    // let form = document.querySelector('#pay_form')
+
+    braintree.dropin.create({
+      authorization: '<%= @token %>', // 我們伺服器 給 客戶端 的 token
+      container: '#dropin-container' // 會根據 script src 將 id為dropin-container 之 元素 變成一個刷卡機
+    }, function (createErr, instance) {
+      button.addEventListener('click', function () {
+        // event.preventDefault()
+
+        instance.requestPaymentMethod(function (err, payload) {
+          // nonce_field.value = payload.nonce
+          // form.submit()
+        });
+      });
+    });
+  })
+</script>
+
+<!-- 2024Braintree -->
+  <!-- <script type="text/javascript">
+    // Step two: create a dropin instance using that container (or a string
+    //   that functions as a query selector such as '#dropin-container')
+    braintree.dropin.create({
+      container: document.getElementById('dropin-container'),
+      authorization: CLIENT_TOKEN_FROM_SERVER,
+      container: '#dropin-container'
+    }, (error, dropinInstance) => {
+      // Use 'dropinInstance' here
+      // Methods documented at https://braintree.github.io/braintree-web-drop-in/docs/current/Dropin.html
+    });
+  </script> -->
