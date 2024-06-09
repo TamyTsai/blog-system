@@ -25,6 +25,12 @@
  *= require_self
  */
 
+// application.css也是一樣載入所有stylesheets目錄下的CSS檔案，最後壓縮成application.css
+// 實務上不喜歡用 require_tree 的方式來一次載入全部的 css 和 javascript，而是喜歡逐條 require載入，
+// 一來比較清楚，
+// 二來也可以確保 css 和 javascript 載入的順序是正確的。
+// 另外也不喜歡用 require_self 將 css 寫在 application.css 裡面，我們應該放到另一個檔案再 require 它即可。
+
  /* 引入在vendor資料夾中自己放進去的bulma.css */
  /* require_tree .會把所有stylesheets中所有css引進來後再編譯，不想要的話可以拔掉 */
 

@@ -8,13 +8,38 @@
           <!-- </svg> -->
       <% end %>
   
+      <!-- 漢堡選單 -->
       <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+        <!-- 以下為三條橫線 與 兩條叉叉線 -->
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
       </a>
     </div>
+
+    <!-- 漢堡選單js -->
+    <script>
+      document.addEventListener('DOMContentLoaded', () => { // ES6箭頭函數寫法
+        // Get all "navbar-burger" elements
+        const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+        // Add a click event on each of them
+        $navbarBurgers.forEach( el => { //ES6箭頭函式寫法
+          el.addEventListener('click', () => {
+
+            // Get the target from the "data-target" attribute
+            const target = el.dataset.target;
+            const $target = document.getElementById(target);
+
+            // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+            el.classList.toggle('is-active');
+            $target.classList.toggle('is-active');
+
+          });
+        });
+      });
+    </script>
   
     <div id="navbarBasicExample" class="navbar-menu">
       <!-- 導覽列靠左部分 -->
