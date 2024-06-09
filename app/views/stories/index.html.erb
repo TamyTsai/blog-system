@@ -1,7 +1,10 @@
 <!-- 單一使用者文章列表頁面 -->
 <h1 class="title">我的文章列表</h1>
-
-<% @stories.each do |story| %> 
+<% if current_user.stories.count == 0 %> <!-- 若當前登入的使用者 文章數量為0的話 -->
+  <br>
+  <p class="is-size-4">尚無文章，趕快來寫一篇吧!</p>
+<% else %> <!-- 若當前登入的使用者 文章數量不為0的話 -->
+  <% @stories.each do |story| %> 
     <!-- stories_controller餵@stories = current_user.stories.all.order(created_at: :desc)給view -->
     <!-- story是@stories資料們（文章們）中的單一資料（單一文章） -->
     <div class="content">
@@ -32,9 +35,9 @@
         </p>
     </div>
     <hr>
+  <% end %>
 <% end %>
 
-<!-- 可加入無文章時 顯示「尚無文章，趕快來寫一篇吧」的流程控制 -->
 
 <!-- stimulus範例 -->
 <!-- stimulus 可達到UJS -->
