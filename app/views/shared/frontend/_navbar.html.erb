@@ -31,8 +31,8 @@
               <div class="navbar-item has-dropdown is-hoverable">
                 <a class="navbar-link">
                   <!-- 付費會員皇冠圖示 -->
-                  <%= content_tag :i, "", class: 'fa-solid fa-crown has-text-primary' if current_user.vip_user? %>
-                  <%= content_tag :i, "", class: 'fa-solid fa-crown has-text-danger' if current_user.platinum_user? %>
+                  <%= content_tag :i, "", class: 'fa-solid fa-crown has-text-primary crown' if current_user.vip_user? %>
+                  <%= content_tag :i, "", class: 'fa-solid fa-crown has-text-danger crown' if current_user.platinum_user? %>
                   <!-- content_tag :要產生的html標籤類型, "標籤中的內容" -->
                   <!-- fontawesome使用i標籤 -->
 
