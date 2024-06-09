@@ -31,6 +31,10 @@ class PagesController < ApplicationController
         # 遇到冗長且還有機會再用到的方法，可以把程式碼搬到model中，以利程式碼的再用
         @stories = Story.published_stories
 
+        @most_popular_stories = Story.published_stories.order(clap: :desc).limit(5)
+        # 在Stories資料表中 挑出已發佈的文章 並依照拍手數多到少排序 且只挑5篇
+        # 撈出 最受歡迎的5篇已發佈文章
+
         # N+1問題：
         # 原始伺服器log顯示之查詢語法
             # Started GET "/" for ::1 at 2024-06-03 19:56:00 +0800

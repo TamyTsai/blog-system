@@ -110,20 +110,26 @@
     <!-- 下方（左）結束 -->
     <!-- 下方（右） -->
     <section class="column">
-      <h2 class="title is-4">Popular on Medium</h2>
+      <h2 class="title is-4">最受歡迎的文章</h2>
       <hr>
+      <% @most_popular_stories.each do |story| %> 
+          <article class="media">
+            <i class="fa-solid fa-fire has-text-danger"></i>&nbsp;&nbsp;
+              <!-- <div class="media-left">01</div> -->
+            <div class="media-content">
+              <h3><%= link_to story.title, story_page_path(story.user.username, story), class: 'has-text-grey-dark' %></h3>
+              <footer>
+                <p><%= link_to story.user.username, user_page_path(story.user.username), class: 'has-text-grey-dark' %></p>
+              </footer>
+            </div>
+          </article>
+      <% end %> 
 
-      <article class="media">
-        <div class="media-left">01</div>
-        <div class="media-content">
-          <h3>Difficult Conversation Lessons From a Psychologist Who’s Been Dealing With People</h3>
-          <footer>
-            <p>Thomas Oppong</p>
-          </footer>
-        </div>
-      </article>
 
-      <article class="media">
+
+
+
+      <!-- <article class="media">
         <div class="media-left">02</div>
         <div class="media-content">
           <h3>Difficult Conversation Lessons From a Psychologist Who’s Been Dealing With People</h3>
@@ -161,7 +167,7 @@
             <p>Thomas Oppong</p>
           </footer>
         </div>
-      </article>
+      </article> -->
     </section>
     <!-- 下方（右）結束 -->
 </section>
