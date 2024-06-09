@@ -5,7 +5,8 @@
     <span class="profile" data-controller='user'>
       <!-- 文章作者大頭照 -->
       <!-- <img src="https://fakeimg.pl/50x50/" class="avatar">  -->
-      <%= image_tag @story.user.avatar.variant(resize: "50x50"), class: 'avatar' if @story.user.avatar.attached? %>
+       <!-- image_tag @story.user.avatar.variant(resize: "50x50"), class: 'avatar' if @story.user.avatar.attached?  -->
+       <%= image_tag @story.user.avatar.variant(resize_to_fill: [50,50]), class: 'avatar' if @story.user.avatar.attached? %>
       <!-- <img class="avatar" src="http://localhost:3000/rails/active_storage/representations/redirect/...png" /> -->
       <!-- stories資料表中被撈出的文章 的 使用者，該使用者 的 大頭照 -->
 

@@ -1,6 +1,7 @@
 <article class="comment">
     <span class="profile">
-    <%= image_tag comment.user.avatar.variant(resize: "50x50"), class: 'avatar' if comment.user.avatar.attached? %>
+    <!-- image_tag comment.user.avatar.variant(resize: "50x50"), class: 'avatar' if comment.user.avatar.attached? -->
+    <%= image_tag comment.user.avatar.variant(resize_to_fill: [50,50]), class: 'avatar' if comment.user.avatar.attached? %>
     <span class="username"><%= comment.user.username %></span>
     </span>
     <%= simple_format(comment.content) %>
