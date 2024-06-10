@@ -4,9 +4,15 @@
 
 // 要記得去application檔案中require進去才會有效果
 
-@import './editor';
+
+/*
+ *= require ./editor
+ */
+
+
 // editor.scss已經引入froala editor
 // 模組化的寫法：這樣與 編輯器相關的 都只要在editor要引入即可，就不用在這裡引入一大堆東西，達到 在這裡引入一個editor，就可以把相關的一起引入 的效果
+// 把Froala編輯器引入 editor（編輯器專屬樣式），再把 editor 引入 stories（文章專屬樣式），再把 stories引入 application（全站共用樣式）
 
 // 上傳文章封面照片頁面 區塊
 form {
