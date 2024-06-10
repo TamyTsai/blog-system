@@ -44,6 +44,11 @@
 
 
 ## 畫面
+### 瀏覽器畫面
+![截圖 2024-06-09 首頁（瀏覽器畫面）](https://github.com/TamyTsai/blog-system/assets/97825677/2bde100d-14dc-457e-af6d-c0e1107e0772)
+
+### 行動裝置畫面
+![截圖 2024-06-09 行動裝置畫面](https://github.com/TamyTsai/blog-system/assets/97825677/bca21dc5-43f2-458d-8ed7-fabe7b1b626f)
 
 
 ## 安裝
