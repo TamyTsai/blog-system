@@ -1,4 +1,19 @@
 /*
  *= require froala-editor/css/froala_editor.min.css
+
+ * 引入FroalaEditor的 plugin外掛
+ * 表格
+ *= require froala-editor/css/plugins/table.min.css
+ * 顏色
+ *= require froala-editor/css/plugins/colors.min.css
+ * 拖曳
+ *= require froala-editor/css/plugins/draggable.min.css
+ * 全螢幕編輯
+ *= require froala-editor/css/plugins/fullscreen.min.css
+ * 圖片
+ *= require froala-editor/css/plugins/image.min.css
+ * 影片
+ *= require froala-editor/css/plugins/video.min.css
  */
+
  

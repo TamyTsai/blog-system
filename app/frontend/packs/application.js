@@ -13,7 +13,7 @@ Turbolinks.start()
 ActiveStorage.start()
 
 import "controllers"
-// 會去找javascript > controllers > index.js
+// 會去找javascript（被我們改名為frontend (webpack相關資料夾)） > controllers > index.js
 // 另外一個叫stimulus的框架
 
 // import 'bulma'
