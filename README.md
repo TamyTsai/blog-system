@@ -1,6 +1,6 @@
 ## 簡介
 - 本專案為一個部落格系統
-- 以HTML、CSS、JavaScripts及Ruby撰寫，為動態網頁
+- 以HTML、CSS、JavaScript及Ruby撰寫，為動態網頁
 - 設計模式（design pattern）採用MVC架構
 - 樣式部分以SCSS撰寫，提升程式碼可讀性
 - 使用Bulma樣式及效果設計頁面，並達成RWD效果，使網頁適應各尺寸裝置瀏覽
