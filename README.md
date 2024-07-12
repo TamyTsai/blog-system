@@ -127,7 +127,7 @@ http://localhost:3000/
 - Ruby v2.7.8
   - Rails v6.1.7.7
     - aasm v 5.5.0
-    - ActiveStorage v 6.1.7.7
+    - ActiveStorage v6.1.7.7
     - babosa v2.0.0
     - devise v4.9.4
     - figaro v1.2.0
